@@ -1,4 +1,4 @@
-# A Place to Rest
+# Vacay Stays
 
 ## Database Schema Design
 
