@@ -8,14 +8,22 @@ if (process.env.NODE_ENV === 'production') {
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Spots', {
+    await queryInterface.createTable('Reviews', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      ownerId: {
+      spotId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Spots'
+        },
+        onDelete: 'CASCADE'
+      },
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -23,37 +31,13 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
-      address: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      city: {
-        type: Sequelize.STRING,
-        allowNull:false,
-      },
-      state: {
-        type: Sequelize.STRING,
+      review: {
+        type: Sequelize.TEXT,
         allowNull: false,
       },
-      country: {
-        type: Sequelize.STRING,
+      stars: {
+        type: Sequelize.INTEGER,
         allowNull: false
-      },
-      lat: {
-        type: Sequelize.DECIMAL
-      },
-      lng: {
-        type: Sequelize.DECIMAL
-      },
-      name: {
-        type: Sequelize.STRING(50)
-      },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
-      price: {
-        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,
@@ -66,19 +50,16 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
     }, options);
-    options.tableName = "Spots"
-    await queryInterface.addIndex(
-      options,
-      ['address', 'city', 'state', 'country'],
-      {
-        unique: true,
-        name: 'idx_full_address'
-      }
-    );
+
+    options.tableName = 'Reviews';
+    await queryInterface.addIndex(options, ['spotId', 'userId'], {
+      unique: true,
+      name: 'idx_reviews_spotId_userId'
+    })
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Spots';
-    await queryInterface.removeIndex(options, 'idx_full_address');
+    options.tableName = 'Reviews';
+    await queryInterface.removeIndex(options, 'idx_reviews_spotId_userId');
     await queryInterface.dropTable(options);
   }
 };
