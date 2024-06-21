@@ -60,6 +60,6 @@ module.exports = {
   async down(queryInterface, Sequelize) {
     options.tableName = 'Reviews';
     await queryInterface.removeIndex(options, 'idx_reviews_spotId_userId');
-    await queryInterface.dropTable(options);
+    return await queryInterface.dropTable(options);
   }
 };
