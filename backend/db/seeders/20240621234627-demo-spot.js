@@ -80,18 +80,7 @@ const demoSpots = [
     "description": "Stylish apartment in the prestigious Aurelian Plaza, centrally located in Minrathous",
     "price": 450
   },
-  {
-    "ownerId": 2,
-    "address": "9 Crestwood Cottage",
-    "city": "Crestwood",
-    "state": "Ferelden",
-    "country": "Thedas",
-    "lat": 45.4215,
-    "lng": -75.6919,
-    "name": "Tranquil Lakeside Retreat",
-    "description": "Cozy cottage overlooking the tranquil waters of Lake Calenhad in Crestwood",
-    "price": 180
-  },
+
   {
     "ownerId": 1,
     "address": "10 Denerim Plaza",

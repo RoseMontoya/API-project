@@ -46,13 +46,13 @@ const demoReviews = [
   },
   {
     "userId": 5,
-    "spotId": 8,
+    "spotId": 7,
     "review": "Don't know what else I expected in denerim. The south is ever so quaint.",
     "stars": 2,
   },
   {
     "userId": 4,
-    "spotId": 6,
+    "spotId": 8,
     "review": "An amazing get away. So peaceful.",
     "stars": 5,
   }
