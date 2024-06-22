@@ -50,7 +50,7 @@ router.post('/', validateSignup, async (req, res, next) => {
             }
         }
     });
-    console.log(existingUser)
+
     if (existingUser) {
         const err = new Error('User already exists');
         err.title = 'User already exists'
@@ -63,6 +63,7 @@ router.post('/', validateSignup, async (req, res, next) => {
         return next(err);
     }
 
+    // Create new user
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({ email, firstName, lastName, username, hashedPassword });
 

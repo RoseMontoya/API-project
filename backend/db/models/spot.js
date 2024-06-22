@@ -90,7 +90,14 @@ module.exports = (sequelize, DataTypes) => {
         fields: ['address', 'city', 'state', 'country'],
         name: 'idx_full_address'
       }
-    ]
+    ],
+    scopes: {
+      allAttributes: {
+          attributes: {
+            exclude: []
+          }
+      }
+    }
   });
   return Spot;
 };
