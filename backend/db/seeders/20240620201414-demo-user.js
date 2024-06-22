@@ -10,25 +10,39 @@ if (process.env.NODE_ENV === 'production') {
 
 const demoUsers = [
   {
-    email: 'demo@user.io',
-    firstName: 'Demo',
-    lastName: 'Lition',
-    username: 'Demo-lition',
-    hashedPassword: bcrypt.hashSync('password')
+    "firstName": "Alistair",
+    "lastName": "Theirin",
+    "email": "alistair.theirin@gmail.com",
+    "username": "greywardenlover",
+    hashedPassword: bcrypt.hashSync("greywarden123")
   },
   {
-    email: 'user1@user.io',
-    firstName: 'Fake',
-    lastName: 'User1',
-    username: 'FakeUser1',
-    hashedPassword: bcrypt.hashSync('password2')
+    "firstName": "Morrigan",
+    "lastName": "Flemeth",
+    "email": "morrigan.flemeth@yahoo.com",
+    "username": "WickedWitchofTheWilds",
+    hashedPassword: bcrypt.hashSync("darkritual")
   },
   {
-    email: 'user2@user.io',
-    firstName: 'Fake',
-    lastName: 'User2',
-    username: 'FakeUser2',
-    hashedPassword: bcrypt.hashSync('password3')
+    "firstName": "Varric",
+    "lastName": "Tethras",
+    "email": "varric.tethras@hotmail.com",
+    "username": "VarricT",
+    hashedPassword: bcrypt.hashSync("bianca987")
+  },
+  {
+    "firstName": "Cassandra",
+    "lastName": "Pentaghast",
+    "email": "cassandra.pentaghast@example.com",
+    "username": "SeekerCassandra",
+    hashedPassword: bcrypt.hashSync("righteousness777")
+  },
+  {
+    "firstName": "Dorian",
+    "lastName": "Pavus",
+    "email": "dorian.pavus@tevinter.imperium",
+    "username": "DorianPavus",
+    hashedPassword: bcrypt.hashSync("magisterial123")
   }
 ];
 
@@ -51,7 +65,7 @@ module.exports = {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
     return await queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ['Demo-lition', 'FakeUser1', 'FakeUser2'] }
+      username: { [Op.in]: ["greywardenlover", "WickedWitchofTheWilds", "VarricT", "SeekerCassandra", "DorianPavus" ] }
     }, {});
   }
 };
