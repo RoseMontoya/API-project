@@ -193,4 +193,23 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     res.json(image);
 } )
 
+// put
+// Edit a Spot
+router.put('/:spotId', requireAuth, validateNewSpot, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        const err = new Error("Spot couldn't be found");
+        err.title = 'Not found'
+        err.status = 404;
+        return next(err);
+    }
+
+    const authorized = authorization(req, spot.ownerId);
+    if (authorized !== true) return next(authorized);
+
+    const newSpot = await spot.update(req.body);
+    res.json(newSpot)
+})
+
 module.exports = router;
