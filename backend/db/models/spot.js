@@ -2,6 +2,7 @@
 const {
   Model, Validator
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     static associate(models) {
@@ -93,9 +94,7 @@ module.exports = (sequelize, DataTypes) => {
     ],
     scopes: {
       allAttributes: {
-          attributes: {
-            exclude: []
-          }
+          attributes: [ "id", 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'createdAt', 'updatedAt'],
       }
     }
   });
