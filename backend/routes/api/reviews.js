@@ -45,9 +45,7 @@ router.get('/current', requireAuth, async (req, res) => {
         review.dataValues.Spot.dataValues.previewImage = previewImg.url
     }))
 
-    console.log(reviews)
     const result = { Reviews: reviews}
-    // console.log(result)
 
     res.json(result)
 })
