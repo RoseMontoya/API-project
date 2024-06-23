@@ -8,6 +8,17 @@ const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models'
 const { check, body } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+const validateReview = [
+    check("review")
+        .exists({ checkFalsy: true })
+        .withMessage('Review text is required'),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .isInt({ min: 1, max: 5})
+        .withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+]
+
 const router = express.Router();
 
 // Get
@@ -83,7 +94,31 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
 
     const newImage = await review.createReviewImage(req.body);
     res.json({ id: newImage.id, url: newImage.url})
+});
+
+// Put
+// Edit a Review
+router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => {
+    const review = await Review.findByPk(req.params.reviewId);
+
+    // Checking if review exists
+    if (!review) {
+        const err = new Error("Review couldn't be found");
+        err.title = 'Not found'
+        err.status = 404;
+        return next(err);
+    }
+
+    // check user is authorized
+    const authorized = authorization(req, review.userId);
+    if (authorized !== true) return next(authorized);
+
+    // edit review
+    await review.update(req.body);
+
+    res.json(review)
 })
+
 
 
 module.exports = router;
