@@ -73,9 +73,7 @@ const requireAuth = (req, _res, next) => {
 }
 
 const authorization = (req, ownerId) => {
-    console.log('HERE I AM BEFORE')
     if (req.user.id !== ownerId) {
-        console.log('HERE I AM AFTER')
         const err = new Error('Forbidden');
         err.title = 'Forbidden';
         err.status = 403
