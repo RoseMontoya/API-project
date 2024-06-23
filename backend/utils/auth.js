@@ -72,4 +72,19 @@ const requireAuth = (req, _res, next) => {
     return next(err);
 }
 
-module.exports = { setTokenCookie, restoreUser, requireAuth };
+const authorization = (req, ownerId) => {
+    console.log('HERE I AM BEFORE')
+    if (req.user.id !== ownerId) {
+        console.log('HERE I AM AFTER')
+        const err = new Error('Forbidden');
+        err.title = 'Forbidden';
+        err.status = 403
+        err.errors = {
+            'message': 'Forbidden'
+        }
+        return err;
+    }
+    return true
+}
+
+module.exports = { setTokenCookie, restoreUser, requireAuth, authorization};
