@@ -73,12 +73,13 @@ const requireAuth = (req, _res, next) => {
 }
 
 const authorization = (req, ownerId) => {
+    // console.log("HEHHHHHHERERE")
     if (req.user.id !== ownerId) {
         const err = new Error('Forbidden');
         err.title = 'Forbidden';
         err.status = 403
         err.errors = {
-            'message': 'Forbidden'
+            'message': 'Not authorized to change this resource'
         }
         return err;
     }

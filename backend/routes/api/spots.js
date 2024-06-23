@@ -237,6 +237,7 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     res.json(image);
 } )
 
+// Create a Review for a Spot based on the Spot's id
 router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
     if (!spot) {
@@ -259,14 +260,9 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
         return next(err);
     }
 
-    const { review, stars } = req.body
-
     const newReview = await spot.createReview({
         userId: req.user.id,
         ...req.body
-        // spotId: req.params.spotId,
-        // review,
-        // stars
     })
 
     res.status(201).json(newReview);
