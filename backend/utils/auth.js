@@ -79,7 +79,7 @@ const authorization = (req, ownerId) => {
         err.title = 'Forbidden';
         err.status = 403
         err.errors = {
-            'message': 'Not authorized to change this resource'
+            'message': 'Not authorized'
         }
         return err;
     }
