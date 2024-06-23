@@ -250,7 +250,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     const existingReview = await Review.findOne({
         where: {
             userId: req.user.id,
-            spotid: spot.id
+            spotId: spot.id
         }
     })
     if (existingReview) {
