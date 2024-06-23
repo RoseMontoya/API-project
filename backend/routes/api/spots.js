@@ -77,8 +77,9 @@ router.get('/', async (_req, res) => {
         });
         spot.dataValues.previewImage = previewImg.url
     }))
+    const result = { Spots: allSpots}
 
-    res.json(allSpots);
+    res.json(result);
 });
 
 // Get all Spots owned by the Current User
@@ -109,7 +110,8 @@ router.get('/current', requireAuth, async (req, res) => {
         });
         spot.dataValues.previewImage = previewImg.url
     }))
-    res.json(userSpots);
+    const result = { Spots: userSpots}
+    res.json(result);
 });
 
 // Get details of a Spot from an id
@@ -129,7 +131,8 @@ router.get('/:spotId', async (req, res, next) => {
                 model: SpotImage,
                 attributes: []
             }
-        ]
+        ],
+        group: ['Spot.id']
     });
 
     if (!spot.id) {
