@@ -135,7 +135,7 @@ router.get('/:spotId', async (req, res, next) => {
         group: ['Spot.id']
     });
 
-    if (!spot.id) {
+    if (!spot) {
         const err = new Error("Spot couldn't be found");
         err.title = 'Not found'
         err.status = 404;
