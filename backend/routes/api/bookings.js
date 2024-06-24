@@ -39,4 +39,30 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json({ Bookings: bookings})
 })
 
+// Delete a Booking
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const booking = await Booking.findByPk(req.params.bookingId);
+    if (!booking) {
+        const err = new Error("Booking couldn't be found");
+        err.title = 'Not found'
+        err.status = 404;
+        return next(err);
+    }
+
+    // check user is authorized
+    const authorized = authorization(req, booking.userId);
+    if (authorized !== true) return next(authorized);
+
+    // check if booking has been started
+    const currentDate = new Date();
+    if (booking.startDate < currentDate) {
+        const err = new Error("Bookings that have been started can't be deleted");
+        err.status = 403;
+        return next(err)
+    }
+
+    await booking.destroy();
+    res.json({ "message": "Successfully deleted" })
+})
+
 module.exports = router;
