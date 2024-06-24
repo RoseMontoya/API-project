@@ -3,7 +3,7 @@ const express = require('express');
 const { Sequelize, Op } = require('sequelize');
 
 const {requireAuth, authorization} = require('../../utils/auth');
-const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models')
+const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models')
 
 const { check, body } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -227,6 +227,35 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
     const reviews = { Reviews: spotReviews}
     res.json(reviews);
+})
+
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    if (!spot) {
+        const err = new Error("Spot couldn't be found");
+        err.title = 'Not found'
+        err.status = 404;
+        return next(err);
+    }
+
+    let bookings;
+    if (spot.ownerId === req.user.id) {
+        bookings = await Booking.findAll({
+            where: { spotId: spot.id },
+            include: {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        })
+    } else {
+        bookings = await Booking.findAll({
+            where: {
+                spotId: spot.id
+            },
+            attributes: ['spotId', 'startDate', 'endDate']
+        })
+    }
+    res.json({ Bookings: bookings});
 })
 
 // Get details of a Spot from an id
