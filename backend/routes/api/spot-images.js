@@ -14,9 +14,9 @@ router.delete("/:imageId", requireAuth, async (req, res, next) => {
         }
     });
 
-    // Checking if review exists
+    // Checking if spot image exists
     if (!image) {
-        const err = new Error("Image couldn't be found");
+        const err = new Error("Spot image couldn't be found");
         err.title = 'Not found'
         err.status = 404;
         return next(err);

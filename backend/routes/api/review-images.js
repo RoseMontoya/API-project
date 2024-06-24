@@ -16,7 +16,7 @@ router.delete("/:imageId", requireAuth, async (req, res, next) => {
 
     // Checking if review exists
     if (!image) {
-        const err = new Error("Image couldn't be found");
+        const err = new Error("Review image couldn't be found");
         err.title = 'Not found'
         err.status = 404;
         return next(err);

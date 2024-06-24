@@ -87,11 +87,11 @@ const validateQuery = [
             throw new Error('Minimum longitude is invalid')
         } else return true
     }),
-    check('minLng')
+    check('maxLng')
         .optional()
         .custom( value => {
         if (value < -180 || value > 180 || isNaN(value)) {
-            throw new Error('Minimum longitude is invalid')
+            throw new Error('Maximum longitude is invalid')
         } else return true
     }),
     check('minPrice')
