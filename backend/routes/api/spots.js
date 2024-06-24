@@ -57,38 +57,112 @@ const validateReview = [
     handleValidationErrors
 ]
 
+const validateQuery = [
+    check('page')
+        .optional()
+        .isInt({ min: 1})
+        .withMessage('Page must be greater than or equal to 1'),
+    check('size')
+        .optional()
+        .isInt({ min: 1})
+        .withMessage('Size must be greater than or equal to 1'),
+    check('maxLat')
+        .optional()
+        .custom( value => {
+        if (value < -90 || value > 90 || isNaN(value)) {
+            throw new Error('Maximum latitude is invalid')
+        } else return true
+    }),
+    check('minLat')
+        .optional()
+        .custom( value => {
+        if (value < -90 || value > 90 || isNaN(value)) {
+            throw new Error('Minimum latitude is invalid')
+        } else return true
+    }),
+    check('minLng')
+        .optional()
+        .custom( value => {
+        if (value < -180 || value > 180 || isNaN(value)) {
+            throw new Error('Minimum longitude is invalid')
+        } else return true
+    }),
+    check('minLng')
+        .optional()
+        .custom( value => {
+        if (value < -180 || value > 180 || isNaN(value)) {
+            throw new Error('Minimum longitude is invalid')
+        } else return true
+    }),
+    check('minPrice')
+        .optional()
+        .custom(value => {
+        if (value < 0) throw new Error('Minimum price must be greater than or equal to 0')
+        else return true
+    }),
+    check('maxPrice')
+        .optional()
+        .custom(value => {
+        if (value < 0) throw new Error('Maximum price must be greater than or equal to 0')
+        else return true
+    }),
+    handleValidationErrors
+]
+
 // * Routes
 const router = express.Router();
 
 // Get
 
 // Get all Spots
-router.get('/', async (_req, res) => {
+router.get('/', validateQuery, async (req, res) => {
+    let {page, size, maxLat, minLat, minLng, maxLng, minPrice, maxPrice} = req.query;
+
+    // Pagination
+    const pagination = {};
+    page = !page ? 1 : parseInt(page);
+    size = !size? 20 : parseInt(size);
+
+    pagination.limit = size;
+    pagination.offset = size * (page - 1);
+
+
+    // Where Query Options
+
+    const where = {};
+    if (minLat) where.lat = { [Op.gte]: minLat}
+    if (maxLat) where.lat = { ...where.lat, [Op.lte]: maxLat}
+    if (minLng) where.lng = { [Op.gte]: minLng}
+    if (maxLng) where.lng = { ...where.lng, [Op.lte]: maxLng}
+    if (minPrice) where.price = { [Op.gte]: minPrice}
+    if (maxPrice) where.price = { ...where.price, [Op.lte]: maxPrice}
+
     // Find spots
-    const allSpots = await Spot.scope("allAttributes").findAll({
-        attributes: [
-            [Sequelize.fn('avg', Sequelize.col('Reviews.stars')),'avgRating'],
-        ],
-        include: [
-            {
-                model: Review,
-                attributes: []
-            }
-        ],
-        group: ['Spot.id']
+    const allSpots = await Spot.findAll({
+        ...pagination,
+        where,
     })
 
     // Add spot image preview to each spot
     await Promise.all(allSpots.map(async spot => {
+        const avg = await Review.findAll({
+            where: { spotId: spot.id },
+            attributes: [[Sequelize.fn('avg', Sequelize.col('stars')),'avgRating']],
+            raw: true
+        });
+
+        spot.dataValues.avgRating = avg[0].avgRating
+
         const previewImg = await SpotImage.findOne( {
             where: {
                 spotId: spot.id,
                 preview: true
             }
         });
-        spot.dataValues.previewImage = previewImg.url
+
+        spot.dataValues.previewImage = previewImg !== null? previewImg.url : previewImg;
     }))
-    const result = { Spots: allSpots}
+    const result = { Spots: allSpots, page, size}
 
     res.json(result);
 });
@@ -119,7 +193,7 @@ router.get('/current', requireAuth, async (req, res) => {
                 preview: true
             }
         });
-        spot.dataValues.previewImage = previewImg.url
+        spot.dataValues.previewImage = previewImg !== null? previewImg.url : previewImg;
     }))
     const result = { Spots: userSpots}
     res.json(result);
