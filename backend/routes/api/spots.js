@@ -168,13 +168,13 @@ router.get('/', validateQuery, async (req, res) => {
 
     // Add spot image preview to each spot
     await Promise.all(allSpots.map(async spot => {
-        const avg = await Review.findAll({
+        const avg = await Review.findOne({
             where: { spotId: spot.id },
             attributes: [[Sequelize.fn('avg', Sequelize.col('stars')),'avgRating']],
             raw: true
         });
 
-        spot.dataValues.avgRating = avg[0].avgRating
+        spot.dataValues.avgRating = avg.avgRating
 
         const previewImg = await SpotImage.findOne( {
             where: {
@@ -426,7 +426,6 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
     err.status = 403
 
     otherBookings.forEach(booking => {
-        console.log('current', booking.startDate, 'new', startDate)
 
         if ((startDate >= booking.startDate && startDate <= booking.endDate) || startDate === booking.startDate) {
             err.errors = {startDate : 'Start date conflicts with an existing booking'}
