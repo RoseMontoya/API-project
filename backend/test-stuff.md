@@ -1,7 +1,7 @@
 ## Extra Users
 {
   "firstName": "Leliana",
-  "lastName": "",
+  "lastName": "Oisine",
   "email": "leliana@spymaster.com",
   "username": "TheNightingale",
   "password": "chantrysecrets"
