@@ -107,7 +107,7 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
         attributes: ['startDate', 'endDate']
     });
 
-    const err = new Error('Sorry, this stop is already booked for the specified dates');
+    const err = new Error('Sorry, this spot is already booked for the specified dates');
     err.title = 'Booking conflict'
     err.status = 403
 

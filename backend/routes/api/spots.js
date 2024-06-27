@@ -347,13 +347,13 @@ router.get('/:spotId', async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
-    console.log(spot);
+
 
     const spotObj = await makeSpotObj(spot);
-    console.log(spot.avgStarRating)
-    spotObj.numReviews = spot.dataValues.numReviews !== undefined? +spot.dataValues.numReviews : 0;
-    spotObj.avgStarRating = spot.dataValues.avgStarRating !== undefined? +(Number(spot.dataValues.avgStarRating).toFixed(1)): 'No ratings'
-    console.log(spotObj)
+
+    spotObj.numReviews = (spot.dataValues.numReviews)? +spot.dataValues.numReviews : 'No reviews available';
+    spotObj.avgStarRating = (spot.dataValues.avgStarRating) ? +(Number(spot.dataValues.avgStarRating).toFixed(1)): 'No ratings'
+
     spotObj.SpotImages = await spot.getSpotImages({
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'spotId']
@@ -456,6 +456,7 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
     // Checking if current user owns spot
     if (req.user.id === spot.ownerId) {
         const err = new Error('Cannot create booking for a spot you own')
+        err.status = 403
         return next(err);
     }
 
