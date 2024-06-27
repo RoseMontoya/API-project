@@ -4,6 +4,7 @@ const { Sequelize, Op } = require('sequelize');
 
 const {requireAuth, authorization} = require('../../utils/auth');
 const { Spot, Review, SpotImage, User, ReviewImage, Booking} = require('../../db/models')
+const { makeSpotObj, makeReviewObj, makeBookingObj } = require('../../utils/helpers')
 
 const { check, body } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -48,17 +49,24 @@ router.get('/current', requireAuth, async (req, res, next) => {
         ]
     })
 
+    const Bookings = []
     await Promise.all(bookings.map(async booking => {
+        const bookingObj = await makeBookingObj(booking);
+        const spot = booking.dataValues.Spot
+        const spotObj = await makeSpotObj(spot)
+
         const previewImg = await SpotImage.findOne( {
             where: {
                 spotId: booking.spotId,
                 preview: true
             }
         });
-        booking.dataValues.Spot.dataValues.previewImage = previewImg !== null? previewImg.url : previewImg;
+        spotObj.previewImage = previewImg !== null? previewImg.url : previewImg;
+        bookingObj.Spot = spotObj
+        Bookings.push(bookingObj)
     }))
 
-    res.json({ Bookings: bookings})
+    res.json({ Bookings: Bookings})
 })
 
 // Put
@@ -123,7 +131,8 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
 
     await booking.update(req.body)
 
-    res.json(booking)
+    const bookingObj = await makeBookingObj(booking)
+    res.json(bookingObj)
 })
 
 // Delete a Booking

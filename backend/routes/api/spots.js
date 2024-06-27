@@ -4,6 +4,7 @@ const { Sequelize, Op } = require('sequelize');
 
 const {requireAuth, authorization} = require('../../utils/auth');
 const { Spot, Review, SpotImage, User, ReviewImage, Booking } = require('../../db/models')
+const { makeSpotObj, makeReviewObj, makeBookingObj, formatDate } = require('../../utils/helpers')
 
 const { check, body } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -167,14 +168,18 @@ router.get('/', validateQuery, async (req, res) => {
     })
 
     // Add spot image preview to each spot
+    const Spots = []
     await Promise.all(allSpots.map(async spot => {
+        const spotObj = await makeSpotObj(spot)
+
         const avg = await Review.findOne({
             where: { spotId: spot.id },
             attributes: [[Sequelize.fn('avg', Sequelize.col('stars')),'avgRating']],
             raw: true
         });
 
-        spot.dataValues.avgRating = avg.avgRating
+        spotObj.avgRating = avg.avgRating !== null? +avg.avgRating.toFixed(1) : 'No ratings';
+
 
         const previewImg = await SpotImage.findOne( {
             where: {
@@ -183,9 +188,12 @@ router.get('/', validateQuery, async (req, res) => {
             }
         });
 
-        spot.dataValues.previewImage = previewImg !== null? previewImg.url : previewImg;
+        spotObj.previewImage = previewImg !== null? previewImg.url : 'No preview image available';
+        Spots.push(spotObj)
     }))
-    const result = { Spots: allSpots, page, size}
+    const result = { Spots: Spots, page, size}
+
+    // console.log(result)
 
     res.json(result);
 });
@@ -209,16 +217,31 @@ router.get('/current', requireAuth, async (req, res) => {
         group: ['Spot.id']
     })
 
+    const Spots = []
     await Promise.all(userSpots.map(async spot => {
+        const spotObj = await makeSpotObj(spot)
+
+        const avg = await Review.findOne({
+            where: { spotId: spot.id },
+            attributes: [[Sequelize.fn('avg', Sequelize.col('stars')),'avgRating']],
+            raw: true
+        });
+
+        spotObj.avgRating = avg.avgRating !== null? +avg.avgRating.toFixed(1) : 'No ratings';
+
+
         const previewImg = await SpotImage.findOne( {
             where: {
                 spotId: spot.id,
                 preview: true
             }
         });
-        spot.dataValues.previewImage = previewImg !== null? previewImg.url : previewImg;
+
+        spotObj.previewImage = previewImg !== null? previewImg.url : 'No preview image available';
+        Spots.push(spotObj)
     }))
-    const result = { Spots: userSpots}
+    const result = { Spots: Spots}
+
     res.json(result);
 });
 
@@ -248,8 +271,16 @@ router.get('/:spotId/reviews', async (req, res, next) => {
         ]
     });
 
-    const reviews = { Reviews: spotReviews}
-    res.json(reviews);
+    const Reviews = []
+    await Promise.all(spotReviews.map(async review => {
+        const reviewObj = await makeReviewObj(review);
+        reviewObj.User = review.User
+
+        reviewObj.ReviewImages = review.ReviewImages;
+        Reviews.push(reviewObj)
+    }))
+
+    res.json({ Reviews: Reviews});
 })
 
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
@@ -278,13 +309,21 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
             attributes: ['spotId', 'startDate', 'endDate']
         })
     }
-    res.json({ Bookings: bookings});
+
+    const Bookings = []
+    await Promise.all(bookings.map(async booking => {
+        const bookingObj = await makeBookingObj(booking);
+        if (booking.User) bookingObj.User = booking.User
+        Bookings.push(bookingObj)
+    }))
+
+    res.json({ Bookings: Bookings});
 })
 
 // Get details of a Spot from an id
 router.get('/:spotId', async (req, res, next) => {
     const spotId = req.params.spotId
-    const spot = await Spot.scope().findByPk(spotId, {
+    const spot = await Spot.findByPk(spotId, {
         attributes: {
             include: [[Sequelize.fn('COUNT', Sequelize.col('Reviews.stars')), 'numReviews'],
                       [Sequelize.fn('avg', Sequelize.col('Reviews.stars')),'avgStarRating']]
@@ -292,11 +331,11 @@ router.get('/:spotId', async (req, res, next) => {
         include: [
             {
                 model: Review,
-                attributes: []
+                attributes: [],
             },
             {
                 model: SpotImage,
-                attributes: []
+                attributes: [],
             }
         ],
         group: ['Spot.id']
@@ -308,8 +347,13 @@ router.get('/:spotId', async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
+    console.log(spot);
 
-    const spotObj = spot.toJSON();
+    const spotObj = await makeSpotObj(spot);
+    console.log(spot.avgStarRating)
+    spotObj.numReviews = spot.dataValues.numReviews !== undefined? +spot.dataValues.numReviews : 0;
+    spotObj.avgStarRating = spot.dataValues.avgStarRating !== undefined? +spot.dataValues.avgStarRating.toFixed(1): 'No ratings'
+    console.log(spotObj)
     spotObj.SpotImages = await spot.getSpotImages({
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'spotId']
@@ -335,7 +379,8 @@ router.post("/", requireAuth, validateNewSpot, async (req, res, next) => {
         ...req.body
     })
 
-    return res.status(201).json(spot);
+    const spotObj = await makeSpotObj(spot)
+    return res.status(201).json(spotObj);
 })
 
 // Add an Image to a Spot based on the Spot's id
@@ -391,7 +436,9 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
         ...req.body
     })
 
-    res.status(201).json(newReview);
+    const newReviewObj = await makeReviewObj(newReview)
+
+    res.status(201).json(newReviewObj);
 })
 
 // Create a Booking for a Spot based on the Spot's id
@@ -450,7 +497,9 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
         endDate
     });
 
-    res.json(newBooking)
+    const newBookingObj = await makeBookingObj(newBooking)
+
+    res.json(newBookingObj)
 })
 
 // put
@@ -469,7 +518,8 @@ router.put('/:spotId', requireAuth, validateNewSpot, async (req, res, next) => {
     if (authorized !== true) return next(authorized);
 
     const newSpot = await spot.update(req.body);
-    res.json(newSpot)
+    const newSpotObj = await makeSpotObj(newSpot);
+    res.json(newSpotObj)
 })
 
 // Delete a Spot

@@ -4,6 +4,7 @@ const { Sequelize, Op } = require('sequelize');
 
 const {requireAuth, authorization} = require('../../utils/auth');
 const { Spot, Review, SpotImage, User, ReviewImage } = require('../../db/models')
+const { makeSpotObj, makeReviewObj } = require('../../utils/helpers')
 
 const { check, body } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -46,17 +47,31 @@ router.get('/current', requireAuth, async (req, res) => {
         ]
     });
 
+
+    const Reviews = []
     await Promise.all(reviews.map(async review => {
+        const reviewObj = await makeReviewObj(review);
+        reviewObj.User = review.User
+        const spot = review.dataValues.Spot.dataValues;
+        console.log("rev", reviewObj);
+        const spotObj = await makeSpotObj(spot);
+
         const previewImg = await SpotImage.findOne( {
             where: {
                 spotId: review.spotId,
                 preview: true
             }
         });
-        review.dataValues.Spot.dataValues.previewImage = previewImg.url
+
+        spotObj.previewImage = previewImg !== null? previewImg.url : 'No preview image available'
+
+        reviewObj.Spot = spotObj;
+        // console.log(review.ReviewImages)
+        reviewObj.ReviewImages = review.ReviewImages;
+        Reviews.push(reviewObj)
     }))
 
-    const result = { Reviews: reviews}
+    const result = { Reviews: Reviews}
 
     res.json(result)
 });
@@ -116,7 +131,9 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
     // edit review
     await review.update(req.body);
 
-    res.json(review)
+    const reviewObj = await makeReviewObj(review)
+
+    res.json(reviewObj)
 })
 
 // Delete
