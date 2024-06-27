@@ -178,7 +178,7 @@ router.get('/', validateQuery, async (req, res) => {
             raw: true
         });
 
-        spotObj.avgRating = avg.avgRating !== null? +avg.avgRating.toFixed(1) : 'No ratings';
+        spotObj.avgRating = avg.avgRating !== null? +(Number(avg.avgRating).toFixed(1)) : 'No ratings';
 
 
         const previewImg = await SpotImage.findOne( {
@@ -227,7 +227,7 @@ router.get('/current', requireAuth, async (req, res) => {
             raw: true
         });
 
-        spotObj.avgRating = avg.avgRating !== null? +avg.avgRating.toFixed(1) : 'No ratings';
+        spotObj.avgRating = avg.avgRating !== null? +(Number(avg.avgRating).toFixed(1)) : 'No ratings';
 
 
         const previewImg = await SpotImage.findOne( {
@@ -352,7 +352,7 @@ router.get('/:spotId', async (req, res, next) => {
     const spotObj = await makeSpotObj(spot);
     console.log(spot.avgStarRating)
     spotObj.numReviews = spot.dataValues.numReviews !== undefined? +spot.dataValues.numReviews : 0;
-    spotObj.avgStarRating = spot.dataValues.avgStarRating !== undefined? +spot.dataValues.avgStarRating.toFixed(1): 'No ratings'
+    spotObj.avgStarRating = spot.dataValues.avgStarRating !== undefined? +(Number(spot.dataValues.avgStarRating).toFixed(1)): 'No ratings'
     console.log(spotObj)
     spotObj.SpotImages = await spot.getSpotImages({
         attributes: {
