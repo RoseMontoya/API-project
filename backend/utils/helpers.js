@@ -27,7 +27,7 @@ const makeSpotObj = async (spot) => {
         lng: +spot.lng,
         name: spot.name,
         description: spot.description,
-        price: +spot.price.toFixed(2),
+        price: +(Number(spot.price).toFixed(2)),
         createdAt: await formatDate(spot.createdAt),
         updatedAt: await formatDate(spot.updatedAt)
     }
@@ -41,7 +41,7 @@ const makeReviewObj = async (review) => {
         userId: review.userId,
         spotId: review.spotId,
         review: review.review,
-        stars: +review.stars,
+        stars: parseInt(review.stars),
         createdAt: await formatDate(review.createdAt),
         updatedAt: await formatDate(review.updatedAt)
     }
