@@ -473,7 +473,8 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
     err.title = 'Booking conflict'
     err.status = 403
 
-    otherBookings.forEach(booking => {
+
+    for (let booking of otherBookings) {
 
         if ((startDate >= booking.startDate && startDate <= booking.endDate) || startDate === booking.startDate) {
             err.errors = {startDate : 'Start date conflicts with an existing booking'}
@@ -488,8 +489,8 @@ router.post('/:spotId/bookings', requireAuth, validateBooking, async (req, res, 
                 "endDate": "End date conflicts with an existing booking"
             }
         }
-        if (err.errors) return next(err);
-    });
+        if (err.errors && Object.keys(err.errors).length !== 0) return next(err);
+    };
 
     const newBooking = await Booking.create({
         spotId: req.params.spotId,

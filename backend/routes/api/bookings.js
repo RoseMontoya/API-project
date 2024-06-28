@@ -111,7 +111,8 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
     err.title = 'Booking conflict'
     err.status = 403
 
-    otherBookings.forEach(booking => {
+    // otherBookings.forEach(booking => {
+    for (const booking of otherBookings) {
 
         if ((startDate >= booking.startDate && startDate <= booking.endDate) || startDate === booking.startDate) {
             err.errors = {startDate : 'Start date conflicts with an existing booking'}
@@ -126,8 +127,9 @@ router.put('/:bookingId', requireAuth, validateBooking, async (req, res, next) =
                 "endDate": "End date conflicts with an existing booking"
             }
         }
-        if (err.errors) return next(err);
-    });
+
+        if (err.errors && Object.keys(err.errors).length !== 0) return next(err);
+    };
 
     await booking.update(req.body)
 
