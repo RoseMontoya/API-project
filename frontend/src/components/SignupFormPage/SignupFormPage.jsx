@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { login } from '../../store/session.js';
-import './LoginForm.css';
+import { signup } from '../../store/session.js';
+import './SignupForm.css';
 
 const LoginFormPage = () => {
     const dispatch = useDispatch();
@@ -21,18 +21,15 @@ const LoginFormPage = () => {
         }
 
         try {
-            const res = await dispatch(login(payload))
+            const res = dispatch(signup(payload))
             navigate('/')
         } catch (err) {
-            const errors = await err.json()
             if (err.status === 401) {
-                setErrors(errors)
+                setErrors(err)
             }
             if (err.status === 400) {
-                console.log(errors)
-                setErrors(errors.errors)
+                setErrors(err.errors)
             }
-            console.log('did we have an error?')
         }
     }
 

@@ -1,1 +1,32 @@
 /* TODO: Add sitewide styles */
+main {
+    bottom: 0;
+    display: flex;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+form {
+    /* flex: 0 0 400px; */
+    /* width: 70%; */
+    gap: .5em;
+}
+
+input {
+    border: 0;
+    border-bottom: 2px solid #CCC;
+    box-sizing: border-box;
+    display: block;
+    outline: 0;
+    padding: .25em .5em;
+    padding-right: 6em;
+  }
+
+
+
+.error {
+  color: red;
+  margin: 1px 16px 16px 16px;
+}

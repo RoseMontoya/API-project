@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const SET_CURRENT_USER = '/store/session/SET_CURRENT_USER';
 const REMOVE_USER = '/store/session/REMOVE_USER';
 
+
 // Actions
 const setCurrentUser = (user) => {
     return {
@@ -18,20 +19,39 @@ const removeUser = (user) => {
     }
 }
 
-// Thunks
+// * Thunks
+
+// Login
 export const login = (user) => async dispatch => {
     const response = await csrfFetch('/api/session', {
         method: 'POST',
         body: JSON.stringify(user)
     });
-
     const data = await response.json()
-    if (response.ok) {
-        dispatch(setCurrentUser(data));
-        return data
-    }
-    throw {...data, status: response.status}
+    dispatch(setCurrentUser(data));
+    return data
 }
+
+// Restore User
+export const restoreUser = () => async dispatch => {
+    const response = await csrfFetch('/api/session');
+    const user = await response.json();
+    dispatch(setCurrentUser(user))
+    return response;
+}
+
+// Signup
+export const signup = (payload) => async dispatch => {
+    const response = await csrfFetch('/api/users', {
+        method: 'post',
+        body: JSON.stringify(payload)
+    });
+
+    const user = await response.json();
+    dispatch(setCurrentUser(user));
+    return user;
+}
+
 
 // Reducer
 const initialState = { user: null };
