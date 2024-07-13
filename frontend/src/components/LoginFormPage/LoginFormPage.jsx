@@ -32,12 +32,13 @@ const LoginFormPage = () => {
                 console.log(errors)
                 setErrors(errors.errors)
             }
-            console.log('did we have an error?')
         }
     }
 
     return (
-        <form onSubmit={handleSumbit} className='login'>
+        <div>
+        <h2>Login</h2>
+        <form onSubmit={handleSumbit} className='userForm'>
             <input
                 type="text"
                 placeholder="username or email"
@@ -57,6 +58,7 @@ const LoginFormPage = () => {
             {errors.message && <p className='error'>{errors.message}</p>}
             <button type='submit'>Login</button>
         </form>
+        </div>
     )
 }
 

@@ -1,48 +1,83 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { signup } from '../../store/session.js';
 import './SignupForm.css';
 
-const LoginFormPage = () => {
+const SignupFormPage = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const sessionUser = useSelector((state) => state.session.user)
 
-    const [credential, setCredential] = useState('');
+    const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState({});
+
+    if (sessionUser) return <Navigate to="/" replace={true} />;
 
     const handleSumbit = async (e) => {
         e.preventDefault();
 
-        const payload = {
-            credential,
-            password
+        if (password !== confirmPassword) {
+            setErrors({confirmPassword: 'Passwords do not match'});
+        } else {
+            const payload = {
+                username,
+                firstName,
+                lastName,
+                email,
+                password
+            }
+
+            try {
+                await dispatch(signup(payload))
+            } catch (err) {
+                const errors = await err.json();
+                setErrors(errors.errors)
+            }
         }
 
-        try {
-            const res = dispatch(signup(payload))
-            navigate('/')
-        } catch (err) {
-            if (err.status === 401) {
-                setErrors(err)
-            }
-            if (err.status === 400) {
-                setErrors(err.errors)
-            }
-        }
     }
 
     return (
-        <form onSubmit={handleSumbit} className='login'>
+        <>
+        <h2>Signup</h2>
+        <form onSubmit={handleSumbit} className='userForm'>
             <input
                 type="text"
-                placeholder="username or email"
-                value={credential}
-                onChange={(e) => setCredential(e.target.value)}
-                name="credential"
+                placeholder="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                name="username"
             />
-            {errors.credential && <p className='error'>{errors.credential}</p>}
+            {errors.username && <p className='error'>{errors.username}</p>}
+            <input
+                type="text"
+                placeholder="first name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                name="firstName"
+            />
+            {errors.firstName && <p className='error'>{errors.firstName}</p>}
+            <input
+                type="text"
+                placeholder="last name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                name="lastName"
+            />
+            {errors.lastName && <p className='error'>{errors.lastName}</p>}
+            <input
+                type="text"
+                placeholder="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+            />
+            {errors.email && <p className='error'>{errors.email}</p>}
             <input
                 type="text"
                 placeholder="password"
@@ -51,10 +86,18 @@ const LoginFormPage = () => {
                 name="password"
             />
             {errors.password && <p className='error'>{errors.password}</p>}
-            {errors.message && <p className='error'>{errors.message}</p>}
-            <button type='submit'>Login</button>
+            <input
+                type="text"
+                placeholder="confirm password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                name="confirmPassword"
+            />
+            {errors.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
+            <button type='submit'>Signup</button>
         </form>
+        </>
     )
 }
 
-export default LoginFormPage;
+export default SignupFormPage;
