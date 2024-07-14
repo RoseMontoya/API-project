@@ -5,7 +5,8 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 
 import * as sessionActions from './store/session'
 import LoginFormPage from "./components/LoginFormPage";
-import SignupFormPage from "./components/SignupFormPage/SignupFormPage";
+import SignupFormPage from "./components/SignupFormPage";
+import Navigation from "./components/Navigation";
 
 const Layout = () => {
   const dispatch = useDispatch()
@@ -19,7 +20,8 @@ const Layout = () => {
 
   return (
     <>
-      {isLoaded && <Outlet />}
+      <Navigation isLoaded={isLoaded} />
+      {isLoaded && <Outlet /> }
     </>
   );
 }
