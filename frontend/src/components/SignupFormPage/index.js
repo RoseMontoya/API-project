@@ -1,2 +1,2 @@
-import SignupFormPage from "./SignupFormPage";
+import SignupFormPage from "./SignupFormModal";
 export default SignupFormPage;
