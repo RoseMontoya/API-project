@@ -1,3 +1,36 @@
+## Users
+
+    "firstName": "Alistair",
+    "lastName": "Theirin",
+    "email": "alistair.theirin@gmail.com",
+    "username": "greywardenlover",
+    password: "greywarden123"
+
+    "firstName": "Morrigan",
+    "lastName": "Flemeth",
+    "email": "morrigan.flemeth@yahoo.com",
+    "username": "WickedWitchofTheWilds",
+    password: "darkritual"
+
+    "firstName": "Varric",
+    "lastName": "Tethras",
+    "email": "varric.tethras@hotmail.com",
+    "username": "VarricT",
+    password: "bianca987"
+
+    "firstName": "Cassandra",
+    "lastName": "Pentaghast",
+    "email": "cassandra.pentaghast@example.com",
+    "username": "SeekerCassandra",
+    password: "righteousness777"
+
+    "firstName": "Dorian",
+    "lastName": "Pavus",
+    "email": "dorian.pavus@tevinter.imperium",
+    "username": "DorianPavus",
+    password: "magisterial123"
+
+
 ## Extra Users
 {
   "firstName": "Leliana",
