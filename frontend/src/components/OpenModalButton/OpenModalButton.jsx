@@ -1,3 +1,5 @@
+import { useModal } from '../../context/modal.jsx'
+
 const OpenModalButton = ({modalComponent, buttonText, onButtonClick, onModalClose}) => {
     const { setModalContent, setOnModalClose } = useModal();
 
