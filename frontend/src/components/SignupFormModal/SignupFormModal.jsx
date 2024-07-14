@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/modal'
+import { useModal } from '../../context/modal.jsx'
 import { signup } from '../../store/session.js';
 import './SignupForm.css';
 
