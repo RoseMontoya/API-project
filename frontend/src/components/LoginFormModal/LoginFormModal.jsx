@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
 import { login } from '../../store/session.js';
 import { useModal } from '../../context/modal.jsx';
 import './LoginForm.css';
 
 const LoginFormModal = () => {
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
 
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
@@ -34,8 +32,8 @@ const LoginFormModal = () => {
 
     return (
         <div>
-        <h2>Log In</h2>
         <form onSubmit={handleSumbit} className='userForm'>
+        <h2 >Log In</h2>
             <label>
                 Username or Email
                 <input

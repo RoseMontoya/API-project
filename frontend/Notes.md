@@ -9,7 +9,9 @@ Colors:
 - research the difference between useNavigate and Navigate
 
 ## WireFrame Images
-![alt text](Landing_page.png)
+![alt text](images/Wireframe-images/Landing_page.png)
+
+![alt text](images/Wireframe-images/dropdown-menu.png)
 
 
 ## Font Sizes
@@ -43,7 +45,7 @@ Colors:
     -Primary Action: Red background with white text and black border
 ## Menu Box
 Example dropdown menu box:
-![alt text](image.png)
+![alt text](images/Wireframe-images/image.png)
 
     - Square corners
     - 1px border with drop shadow
@@ -57,7 +59,7 @@ Example dropdown menu box:
     - Box width grows to fit each line of content (for demo user the first name is longest, but for other user's that might be the email address)
 ## Modal Popup Windows
 Example popup Modal window:
-![alt text](image-1.png)
+![alt text](images/Wireframe-images/image-1.png)
 modal-popup
 
     -Semi-transparent, black background covering whole page
