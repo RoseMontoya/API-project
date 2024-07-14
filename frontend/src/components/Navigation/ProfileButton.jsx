@@ -1,10 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { FaCircleUser } from "react-icons/fa6";
+import { IoMenu } from "react-icons/io5";
+
+// Local Imports
 import { logout } from "../../store/session";
 import OpenModalMenuItem from './OpenModalMenuItem'
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from "../SignupFormModal";
+
+
 const ProfileButton = ({user}) => {
     const dispatch =  useDispatch();
     const [showMenu, setShowMenu] = useState(false);
@@ -41,9 +46,10 @@ const ProfileButton = ({user}) => {
     const dropdownClasses ="profile-dropdown" + (showMenu ? "" : " hidden");
     return (
     <div>
-    <button
+    <button id="toggle-menu-button"
         onClick={toggleMenu}
     >
+        <IoMenu />
         <FaCircleUser />
     </button>
     <ul className={dropdownClasses} ref={ulRef}>

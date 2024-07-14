@@ -1,12 +1,8 @@
 /* TODO: Add sitewide styles */
-main {
-    bottom: 0;
-    display: flex;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+body {
+  font-size: 14pt;
+  margin: 0;
+}
 
 form {
     /* flex: 0 0 400px; */
@@ -24,6 +20,19 @@ input {
     padding-right: 6em;
     margin-bottom: 1em;
   }
+
+button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border-color: lightgray;
+  border-style: solid;
+}
+
+button:hover {
+  cursor: pointer;
+}
 
 .userForm {
   display: flex;

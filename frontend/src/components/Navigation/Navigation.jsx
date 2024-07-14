@@ -1,10 +1,8 @@
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
-// import OpenModalButton from '../OpenModalButton'
-// import LoginFormModal from "../LoginFormModal";
-// import SignupFormModal from "../SignupFormPage";
 import './Navigation.css';
+import { GiPalmTree } from "react-icons/gi";
 
 const Navigation = ({isLoaded}) => {
     const sessionUser = useSelector(state => state.session.user)
@@ -12,8 +10,11 @@ const Navigation = ({isLoaded}) => {
     return (
         <nav>
         <ul>
-            <li>
-                <NavLink to="/">Home</NavLink>
+            <li id="home-nav">
+                <NavLink to="/">
+                    <div id="site-icon"><GiPalmTree /></div>
+                    Vacay Stays
+                </NavLink>
             </li>
             {isLoaded && (
                 <li>

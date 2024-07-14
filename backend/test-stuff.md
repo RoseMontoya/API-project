@@ -30,7 +30,6 @@
     "username": "DorianPavus",
     password: "magisterial123"
 
-
 ## Extra Users
 {
   "firstName": "Leliana",
