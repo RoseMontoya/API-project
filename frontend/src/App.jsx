@@ -12,7 +12,6 @@ const Layout = () => {
 
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => {
-      console.log('success')
       setIsLoaded(true)})
   }, [dispatch])
 

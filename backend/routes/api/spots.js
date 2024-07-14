@@ -193,7 +193,6 @@ router.get('/', validateQuery, async (req, res) => {
 // Get all Spots owned by the Current User
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
-    console.log(user)
 
     const userSpots = await Spot.scope("allAttributes").findAll({
         where: {

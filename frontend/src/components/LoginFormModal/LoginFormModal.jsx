@@ -26,25 +26,10 @@ const LoginFormModal = () => {
             .then(closeModal)
             .catch(async (res) => {
                 const data = await res.json();
-                console.log(data)
                 if (data && data.errors) {
                     setErrors(data.errors)
                 }
             });
-
-        // try {
-        //     const res = await dispatch(login(payload))
-        //     navigate('/')
-        // } catch (err) {
-        //     const errors = await err.json()
-        //     if (err.status === 401) {
-        //         setErrors(errors)
-        //     }
-        //     if (err.status === 400) {
-        //         console.log(errors)
-        //         setErrors(errors.errors)
-        //     }
-        // }
     }
 
     return (

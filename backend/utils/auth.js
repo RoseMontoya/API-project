@@ -73,7 +73,6 @@ const requireAuth = (req, _res, next) => {
 }
 
 const authorization = (req, ownerId) => {
-    // console.log("HEHHHHHHERERE")
     if (req.user.id !== ownerId) {
         const err = new Error('Forbidden');
         err.title = 'Forbidden';
