@@ -46,10 +46,6 @@ const ProfileButton = ({user}) => {
         navigate('/')
     };
 
-    const demoUser = () => {
-
-    }
-
     const dropdownClasses ="profile-dropdown" + (showMenu ? "" : " hidden");
     return (
     <div>
