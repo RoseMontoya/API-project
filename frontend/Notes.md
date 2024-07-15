@@ -13,6 +13,16 @@ Colors:
 
 ![alt text](images/Wireframe-images/dropdown-menu.png)
 
+![alt text](images/Wireframe-images/dropdown-menu-loggedin-1.png)
+
+![alt text](images/Wireframe-images/login-start.png)
+
+![alt text](images/Wireframe-images/login-errors.png)
+
+![alt text](images/Wireframe-images/signup.png)
+
+![alt text](images/Wireframe-images/signup-errors.png)
+
 
 ## Font Sizes
     -Heading: 24pt, bold
@@ -45,6 +55,7 @@ Colors:
     -Primary Action: Red background with white text and black border
 ## Menu Box
 Example dropdown menu box:
+
 ![alt text](images/Wireframe-images/image.png)
 
     - Square corners
@@ -59,8 +70,8 @@ Example dropdown menu box:
     - Box width grows to fit each line of content (for demo user the first name is longest, but for other user's that might be the email address)
 ## Modal Popup Windows
 Example popup Modal window:
+
 ![alt text](images/Wireframe-images/image-1.png)
-modal-popup
 
     -Semi-transparent, black background covering whole page
     -Position the window 100px from top and centered (auto margins) left to right

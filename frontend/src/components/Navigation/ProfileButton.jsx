@@ -8,10 +8,12 @@ import { logout } from "../../store/session";
 import OpenModalMenuItem from './OpenModalMenuItem'
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from "../SignupFormModal";
+import { useNavigate } from "react-router-dom";
 
 
 const ProfileButton = ({user}) => {
     const dispatch =  useDispatch();
+    const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef()
 
@@ -41,6 +43,11 @@ const ProfileButton = ({user}) => {
         e.preventDefault();
         dispatch(logout())
         closeMenu()
+        navigate('/')
+    };
+
+    const demoUser = () => {
+
     }
 
     const dropdownClasses ="profile-dropdown" + (showMenu ? "" : " hidden");
@@ -66,16 +73,16 @@ const ProfileButton = ({user}) => {
             <>
             <li>
               <OpenModalMenuItem
-                itemText="Log In"
+                itemText="Sign Up"
                 onItemClick={closeMenu}
-                modalComponent={<LoginFormModal />}
+                modalComponent={<SignupFormModal />}
               />
             </li>
             <li>
               <OpenModalMenuItem
-                itemText="Sign Up"
+                itemText="Log In"
                 onItemClick={closeMenu}
-                modalComponent={<SignupFormModal />}
+                modalComponent={<LoginFormModal />}
               />
             </li>
             </>

@@ -1,3 +1,12 @@
 h2 {
     text-align: center;
 }
+
+#demoUser {
+    color: #00525E;
+    justify-content: center;
+    text-decoration: underline;
+    font-weight: bold;
+    padding: 1em 0;
+    cursor: pointer;
+}

@@ -2,33 +2,34 @@
 
     "firstName": "Alistair",
     "lastName": "Theirin",
-    "email": "alistair.theirin@gmail.com",
+    "email": "alistair.theirin@greywardens.com",
     "username": "greywardenlover",
     password: "greywarden123"
 
     "firstName": "Morrigan",
     "lastName": "Flemeth",
-    "email": "morrigan.flemeth@yahoo.com",
+    "email": "morrigan.flemeth@wilds.net",
     "username": "WickedWitchofTheWilds",
     password: "darkritual"
 
     "firstName": "Varric",
     "lastName": "Tethras",
     "email": "varric.tethras@hotmail.com",
-    "username": "VarricT",
+    "username": "VarricTheChronicler",
     password: "bianca987"
 
     "firstName": "Cassandra",
     "lastName": "Pentaghast",
-    "email": "cassandra.pentaghast@example.com",
+    "email": "cassandra.pentaghast@inquisition.com",
     "username": "SeekerCassandra",
     password: "righteousness777"
 
     "firstName": "Dorian",
     "lastName": "Pavus",
     "email": "dorian.pavus@tevinter.imperium",
-    "username": "DorianPavus",
+    "username": "MageOfTevinter",
     password: "magisterial123"
+
 
 ## Extra Users
 {
@@ -38,6 +39,11 @@
   "username": "TheNightingale",
   "password": "chantrysecrets"
 },
+    firstName: "Josephine",
+    lastName: "Montilyet",
+    email: "josephine.montilyet@inquisition.com",
+    username: "AmbassadorJosephine",
+    hashedPassword: bcrypt.hashSync("diplomacy123")
 {
     "firstName": "Solas",
     "lastName": "Wolf",
@@ -52,7 +58,42 @@
     "username": "MadameDeFer",
     "hashedPassword": bcrypt.hashSync("imperialenvy999")
 }
-t App.jsx:28:14
+     "firstName": "Iron",
+    "lastName": "Bull",
+    "email": "iron.bull@benhasarath.qun",
+    "username": "IronBullQunari",
+    "password": "strongestHorns123"
+
+    "firstName": "Sera",
+    "lastName": "",
+    "email": "SeraTheMenace@red.jen",
+    "username": "RedJenny",
+    "password": "arrowsAndLaughs456"
+
+{
+    "firstName": "Cullen",
+    "lastName": "Rutherford",
+    "email": "cullen.rutherford@inquisition.com",
+    "username": "CommanderCullen",
+    "password": "templarDuty789"
+}
+{
+    "firstName": "Thom",
+    "lastName": "Reiner",
+    "email": "blackwall@inquisition.com",
+    "username": "WardenBlackwall",
+    "password": "seekingRedemption321"
+}
+{
+    "firstName": "Cole",
+    "lastName": "Compassion",
+    "email": "SpiritofCompassion@fade.com",
+    "username": "SpiritCole",
+    "password": "compassionateGhost654"
+}
+
+
+
 
 ## Extra Spots
 {

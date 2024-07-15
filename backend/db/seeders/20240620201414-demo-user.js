@@ -12,28 +12,28 @@ const demoUsers = [
   {
     "firstName": "Alistair",
     "lastName": "Theirin",
-    "email": "alistair.theirin@gmail.com",
+    "email": "alistair.theirin@greywardens.com",
     "username": "greywardenlover",
     hashedPassword: bcrypt.hashSync("greywarden123")
   },
   {
     "firstName": "Morrigan",
     "lastName": "Flemeth",
-    "email": "morrigan.flemeth@yahoo.com",
+    "email": "morrigan.flemeth@wilds.net",
     "username": "WickedWitchofTheWilds",
     hashedPassword: bcrypt.hashSync("darkritual")
   },
   {
     "firstName": "Varric",
     "lastName": "Tethras",
-    "email": "varric.tethras@hotmail.com",
-    "username": "VarricT",
+    "email": "varric.tethras@kirkwall.com",
+    "username": "VarricTheChronicler",
     hashedPassword: bcrypt.hashSync("bianca987")
   },
   {
     "firstName": "Cassandra",
     "lastName": "Pentaghast",
-    "email": "cassandra.pentaghast@example.com",
+    "email": "cassandra.pentaghast@inquisition.com",
     "username": "SeekerCassandra",
     hashedPassword: bcrypt.hashSync("righteousness777")
   },
@@ -41,7 +41,7 @@ const demoUsers = [
     "firstName": "Dorian",
     "lastName": "Pavus",
     "email": "dorian.pavus@tevinter.imperium",
-    "username": "DorianPavus",
+    "username": "MageOfTevinter",
     hashedPassword: bcrypt.hashSync("magisterial123")
   }
 ];

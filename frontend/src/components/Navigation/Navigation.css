@@ -28,9 +28,11 @@ li {
     border-radius: 2px;
     z-index: 1;
     padding: .5em 1em;
+    min-width: 180px;
 }
 .profile-dropdown * {
     padding: .125em 0em;
+    cursor: pointer;
 }
 
 .hidden {
@@ -54,19 +56,23 @@ li {
 }
 /*
 .playwrite-cu-<uniquifier> {
-  font-family: "Playwrite CU", cursive;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-} */
+    font-family: "Playwrite CU", cursive;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+    } */
 
 
-#toggle-menu-button {
-    height: max-content;
-    padding: .25em;
-    font-size: 1.25em;
-    border-radius: 25px;
-    border-width: 1px;
+    #toggle-menu-button {
+        height: max-content;
+        padding: .25em;
+        font-size: 1.25em;
+        border-radius: 25px;
+        box-shadow: none;
+        background-color: white;
+        color: black;
+        border: 1px lightgrey solid;
+
 }
 
 #toggle-menu-button:hover {
@@ -75,5 +81,4 @@ li {
 
 #toggle-menu-button * {
     padding: .125em;
-
 }
