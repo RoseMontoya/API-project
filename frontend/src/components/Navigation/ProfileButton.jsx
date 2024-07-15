@@ -62,10 +62,12 @@ const ProfileButton = ({user}) => {
     <ul className={dropdownClasses} ref={ulRef}>
         {user ? (
             <>
-                <li>{user.username}</li>
-                <li>{user.firstName} {user.lastName}</li>
+                <li>Hello, {user.firstName}</li>
                 <li>{user.email}</li>
-                <li>
+                <hr></hr>
+                <li>Manage Spots</li>
+                <hr></hr>
+                <li id="logout">
                     <button onClick={logoutClick}>Log Out</button>
                 </li>
             </>

@@ -27,14 +27,23 @@ li {
     border: solid 2.5px black;
     border-radius: 2px;
     z-index: 1;
-    padding: .5em 1em;
+    padding: .2em 1em;
     min-width: 180px;
 }
+
 .profile-dropdown * {
     padding: .125em 0em;
     cursor: pointer;
+    font-weight: bold;
 }
 
+.profile-dropdown hr {
+    width: 100%;
+    border-top: 2px solid black;
+    position: relative;
+    padding: 0;
+    margin: 5px 0;
+}
 .hidden {
     display: none;
 }
@@ -81,4 +90,15 @@ li {
 
 #toggle-menu-button * {
     padding: .125em;
+}
+
+#logout {
+    justify-content: center;
+}
+#logout button {
+ padding: 1em;
+ border-radius: 25px;
+ box-shadow: none;
+ background-color: rgb(129, 128, 128);
+ color: white;
 }
