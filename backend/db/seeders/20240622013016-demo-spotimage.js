@@ -10,8 +10,9 @@ if (process.env.NODE_ENV === 'production') {
 const demoSpotImages = [
   {
     spotId: 1,
-    url: "https://static.wikia.nocookie.net/dragonage/images/7/70/Peak.jpg/revision/latest?cb=20091210191621",
+    url: "https://i.quotev.com/oq3izkvagcnq.jpg",
     preview: true
+
   },
   {
     spotId: 1,
@@ -19,7 +20,7 @@ const demoSpotImages = [
   },
   {
     spotId: 2,
-    url: "https://static.wikia.nocookie.net/dragonage/images/d/d0/Skyhold_Exterior.png/revision/latest/scale-to-width-down/1000?cb=20150718094736",
+    url: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/7abebfd5-65cb-4a0b-9d30-b5d1f0da43f4/dbkyvwf-1b0e321d-7d80-453d-8eca-cacb6a98b36d.png/v1/fit/w_800,h_450,q_70,strp/skyhold___dragon_age_fanart_by_danihaynes_dbkyvwf-414w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDUwIiwicGF0aCI6IlwvZlwvN2FiZWJmZDUtNjVjYi00YTBiLTlkMzAtYjVkMWYwZGE0M2Y0XC9kYmt5dndmLTFiMGUzMjFkLTdkODAtNDUzZC04ZWNhLWNhY2I2YTk4YjM2ZC5wbmciLCJ3aWR0aCI6Ijw9ODAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.pczSC0gg6fhnRaEdJo6oH0Q7KixOfuwKEYfdNPZEVxA",
     preview: true
   },
   {
@@ -28,7 +29,7 @@ const demoSpotImages = [
   },
   {
     spotId: 3,
-    url: "https://static.wikia.nocookie.net/dragonage/images/3/32/Emerald_Graves_Inquisition.jpg/revision/latest/scale-to-width-down/1000?cb=20150107042135",
+    url: "https://i.pinimg.com/originals/59/7e/03/597e03eb2488d785c200755dbf6acd0d.jpg",
     preview: true
   },
   {
@@ -46,7 +47,7 @@ const demoSpotImages = [
   },
   {
     spotId: 5,
-    url: "https://static.wikia.nocookie.net/dragonage/images/7/7d/Hightown_DA2.png/revision/latest/scale-to-width-down/1000?cb=20140409093317",
+    url: "https://pbs.twimg.com/media/DhEg107UwAAfmqq?format=jpg&name=medium",
     preview: true
   },
   {
@@ -55,7 +56,7 @@ const demoSpotImages = [
   },
   {
     spotId: 6,
-    url: "https://static.wikia.nocookie.net/dragonage/images/8/8a/Veilguard_promotional_4.jpg/revision/latest/scale-to-width-down/1000?cb=20240610030625",
+    url: "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2023/03/dragon_age_tevinter_building_concept_art.jpg",
     preview: true
   },
   {
@@ -64,7 +65,7 @@ const demoSpotImages = [
   },
   {
     spotId: 7,
-    url: "https://static.wikia.nocookie.net/dragonage/images/c/c7/Denerim.JPG/revision/latest?cb=20091001003154",
+    url: "https://i.quotev.com/xkujl4ggoznq.jpg",
     preview: true
   },
   {

@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
 import * as sessionActions from './store/session'
+import SpotDetailsPage from "./components/SpotDetailsPage";
 
 
 const Layout = () => {
@@ -33,8 +34,8 @@ const router = createBrowserRouter([
         element: <LandingPage />,
       },
       {
-        path: 'spots',
-        element: <h1>spots</h1>
+        path: 'spots/:spotId',
+        element: <SpotDetailsPage />,
       }
     ]
   }

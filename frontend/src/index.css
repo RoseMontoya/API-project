@@ -75,3 +75,37 @@ input {
   text-align: left;
   /* margin: 0px 16px 16px 16px; */
 }
+
+.image-container-square{
+  width: 16em;
+  height: 16em;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
+  gap: 1em;
+  justify-items: center;
+}
+
+/* .grid-item {
+  padding: 1em;
+} */
+
+
+/* @media (min-width: 768px) {
+  .grid-container {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+} */
+
+@media (min-width: 1024px) {
+  .grid-container {
+      grid-template-columns: repeat(4, 1fr);
+  }
+}
