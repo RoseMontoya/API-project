@@ -23,9 +23,10 @@ const SignupFormModal = () => {
         if (username.length < 4 ||password.length < 6 || firstName.length < 2 || lastName.length < 2 || confirmPassword.length < 6 || !email.length
         )  return setDisabled(true)
 
+        console.log('in effect')
         setDisabled(false)
     }, [username, password, email, firstName, lastName, confirmPassword])
-
+    console.log(disabled)
     const handleSumbit = async (e) => {
         e.preventDefault();
 
@@ -57,12 +58,12 @@ const SignupFormModal = () => {
         <>
         <form onSubmit={handleSumbit} className='userForm'>
         <h2>Signup</h2>
-                {errors.email && <p className='error'>Password is invalid</p>}
+                {errors.email && <p className='error'>{errors.email}</p>}
+                {errors.username && <p className='error'>{ errors.username ||"Username is invalid"}</p>}
+                {errors.firstName && <p className='error'>First name is invalid</p>}
+                {errors.lastName && <p className='error'>Last name is invalid</p>}
+                {errors.password && <p className='error'>Password is invalid</p>}
                 {errors.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
-                {errors.username && <p className='error'>Username is invalid</p>}
-                {errors.firstName && <p className='error'>{errors.firstName}</p>}
-                {errors.lastName && <p className='error'>{errors.lastName}</p>}
-                {errors.password && <p className='error'>{errors.password}</p>}
 
             <label>
                 Email
