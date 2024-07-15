@@ -71,7 +71,7 @@ const LoginFormModal = () => {
                 {/* {errors.password && <p className='error'>{errors.password}</p>} */}
             </label>
             <button type='submit' disabled={disabled} className={disabled? "disabled" : ""}>Log In</button>
-            <li onClick={demoUser} id='demoUser'>Demo User</li>
+            <li onClick={demoUser} id='demoUser'>Log in as Demo User</li>
         </form>
         </div>
     )

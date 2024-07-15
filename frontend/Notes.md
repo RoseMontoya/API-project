@@ -5,6 +5,7 @@ Colors:
     -  #f44336
 
 ## To Do
+- Modify errors based on backend. Remove errors that are not neccessary in form.
 - Add profile pic feature
 - research the difference between useNavigate and Navigate
 

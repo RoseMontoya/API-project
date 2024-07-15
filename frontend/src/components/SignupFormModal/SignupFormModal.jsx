@@ -23,10 +23,9 @@ const SignupFormModal = () => {
         if (username.length < 4 ||password.length < 6 || firstName.length < 2 || lastName.length < 2 || confirmPassword.length < 6 || !email.length
         )  return setDisabled(true)
 
-        console.log('in effect')
         setDisabled(false)
     }, [username, password, email, firstName, lastName, confirmPassword])
-    console.log(disabled)
+
     const handleSumbit = async (e) => {
         e.preventDefault();
 
