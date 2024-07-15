@@ -77,18 +77,18 @@ input {
 }
 
 .image-container-square{
-  width: 16em;
-  height: 16em;
+  width: 12em;
+  height: 12em;
   overflow: hidden;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   margin-bottom: 1em;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
   gap: 1em;
   justify-items: center;
 }

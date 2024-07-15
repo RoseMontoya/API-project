@@ -8,6 +8,7 @@ Colors:
 - Modify errors based on backend. Remove errors that are not neccessary in form.
 - Add profile pic feature
 - research the difference between useNavigate and Navigate
+- f
 
 ## WireFrame Images
 ![alt text](images/Wireframe-images/Landing_page.png)

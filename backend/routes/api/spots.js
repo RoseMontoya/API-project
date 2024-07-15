@@ -350,7 +350,8 @@ router.get('/:spotId', async (req, res, next) => {
 
     const spotObj = await makeSpotObj(spot);
 
-    spotObj.numReviews = (spot.dataValues.numReviews)? +spot.dataValues.numReviews : 'No reviews available';
+    // ! Quick fix for numReviews
+    spotObj.numReviews = (spot.dataValues.numReviews)? +spot.dataValues.numReviews / 2 : 'No';
     spotObj.avgStarRating = (spot.dataValues.avgStarRating) ? +(Number(spot.dataValues.avgStarRating).toFixed(1)): 'No ratings'
 
     spotObj.SpotImages = await spot.getSpotImages({

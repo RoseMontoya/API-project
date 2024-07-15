@@ -53,7 +53,7 @@ router.get('/current', requireAuth, async (req, res) => {
         const reviewObj = await makeReviewObj(review);
         reviewObj.User = review.User
         const spot = review.dataValues.Spot.dataValues;
-        console.log("rev", reviewObj);
+        // console.log("rev", reviewObj);
         const spotObj = await makeSpotObj(spot);
 
         const previewImg = await SpotImage.findOne( {
