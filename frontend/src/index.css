@@ -44,6 +44,10 @@ input {
   width: 100%;
 }
 
+p {
+  font-size: 14px;
+}
+
 .userForm {
   padding: 1em;
   /* border-radius: 10px; */

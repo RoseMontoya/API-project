@@ -31,7 +31,7 @@ const makeSpotObj = async (spot) => {
         createdAt: await formatDate(spot.createdAt),
         updatedAt: await formatDate(spot.updatedAt)
     }
-    // console.log(obj)
+
     return obj
 }
 

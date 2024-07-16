@@ -60,7 +60,6 @@ const SpotDetailsPage = () => {
         <div className="image-gallery">
          {images.map((image, index) => (
             <div key={image.id} className={`image-container image-${index + 1}`}>
-                {console.log(index)}
                 <img src={image.url} alt={`Image ${index + 1}`}/>
             </div>
          ))}
@@ -95,7 +94,6 @@ const SpotDetailsPage = () => {
             {reviews.map(review => (
                 <div key={review.id} className="review">
                     <h3>{review.User.firstName}</h3>
-                    {/* {console.log(review)} */}
                     <h4>{formatReviewDate(review.updatedAt)}</h4>
                     <p>{review.review}</p>
                 </div>

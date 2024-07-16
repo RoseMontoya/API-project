@@ -13,6 +13,7 @@ Colors:
     - add in review start amount next to name on
     - make pictures rectangles instead of squares
     - make spot description wrap around reserve button
+    - make sure that month is correct month
 
 ## WireFrame Images
 ![alt text](images/Wireframe-images/Landing_page.png)

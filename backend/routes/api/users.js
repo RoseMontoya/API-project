@@ -50,7 +50,6 @@ router.post('/', validateSignup, async (req, res, next) => {
             }
         }
     });
-    console.log(existingUser)
     if (existingUser) {
         const err = new Error('User already exists');
         err.title = 'User already exists'

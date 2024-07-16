@@ -10,8 +10,6 @@ const Navigation = ({isLoaded}) => {
 
     const handleClick = (e) => {
         e.preventDefault();
-
-        console.log(e)
         navigate('/spots/new')
     }
 

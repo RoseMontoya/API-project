@@ -17,7 +17,7 @@ const LandingPage = () => {
     if (!spotsObj) return null;
 
     const spots = Object.values(spotsObj)
-    // console.log(spots)
+
 
 
     const handleClick = (spot) => {

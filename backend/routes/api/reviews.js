@@ -53,7 +53,6 @@ router.get('/current', requireAuth, async (req, res) => {
         const reviewObj = await makeReviewObj(review);
         reviewObj.User = review.User
         const spot = review.dataValues.Spot.dataValues;
-        // console.log("rev", reviewObj);
         const spotObj = await makeSpotObj(spot);
 
         const previewImg = await SpotImage.findOne( {
@@ -66,7 +65,7 @@ router.get('/current', requireAuth, async (req, res) => {
         spotObj.previewImage = previewImg !== null? previewImg.url : 'No preview image available'
 
         reviewObj.Spot = spotObj;
-        // console.log(review.ReviewImages)
+
         reviewObj.ReviewImages = review.ReviewImages;
         Reviews.push(reviewObj)
     }))

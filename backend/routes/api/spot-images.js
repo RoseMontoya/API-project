@@ -21,7 +21,7 @@ router.delete("/:imageId", requireAuth, async (req, res, next) => {
         err.status = 404;
         return next(err);
     }
-    console.log(image.Spot.ownerId)
+
     // Check if authorized
     const authorized = authorization(req, image.Spot.ownerId);
     if (authorized !== true) return next(authorized);

@@ -13,7 +13,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const validateNewSpot = [
     check('address')
         .exists({ checkFalsy: true })
-        .withMessage('Street address is required'),
+        .withMessage('Address is required'),
     check('city')
         .exists({ checkFalsy: true })
         .withMessage('City is required'),
@@ -23,11 +23,17 @@ const validateNewSpot = [
     check('country')
         .exists({ checkFalsy: true })
         .withMessage('Country is required'),
+    check('lat')
+        .exists({checkFalsy: true})
+        .withMessage('Latitude is required'),
     body('lat').custom( value => {
         if (value < -90 || value > 90) {
             throw new Error('Latitude must be with -90 and 90')
         } else return true
     }),
+    check('lng')
+        .exists({checkFalsy: true})
+        .withMessage('Longitude is required'),
     body('lng').custom( value => {
         if (value < -180 || value > 180) {
             throw new Error('Longitude must be within -180 and 180')
@@ -35,11 +41,17 @@ const validateNewSpot = [
     }),
     check('name')
         .exists({ checkFalsy: true })
+        .withMessage('Name is required'),
+    check('name')
         .isLength({ max: 50 })
         .withMessage('Name must be less than 50 characters'),
     check('description')
         .exists({ checkFalsy: true })
-        .withMessage('Description is required'),
+        .isLength({ min: 30})
+        .withMessage('Description needs a minimum of 30 characters'),
+    check('price')
+        .exists({ checkFalsy: true })
+        .withMessage('Price is required'),
     body('price').custom(value => {
         if (value < 0) throw new Error('Price per day must be a positive number')
         else return true
@@ -193,8 +205,6 @@ router.get('/', validateQuery, async (req, res) => {
         Spots.push(spotObj)
     }))
     const result = { Spots: Spots, page, size}
-
-    // console.log(result)
 
     res.json(result);
 });
