@@ -8,12 +8,17 @@ import './LandingPage.css'
 const LandingPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const spots = useSelector(state => state.spots? Object.values(state.spots) : []);
-    console.log(spots)
+    const spotsObj = useSelector(state => state.spots);
 
     useEffect(() => {
         dispatch(loadAllSpots())
     }, [dispatch])
+
+    if (!spotsObj) return null;
+
+    const spots = Object.values(spotsObj)
+    // console.log(spots)
+
 
     const handleClick = (spot) => {
         navigate(`/spots/${spot.id}`)
@@ -25,16 +30,16 @@ const LandingPage = () => {
                 <div key={spot.id} className='grid-item'
                 onClick={() => handleClick(spot)}
                 >
-                {console.log(spot.previewImage)}
                 <div className='image-container-square'>
+                    <p className='name' data->{spot.name}</p>
                     <img src={spot.previewImage}/>
                 </div>
-                <div>
+                <div className='spot-preview-text'>
                     <div>
                         <p>{`${spot.city}, ${spot.state}`}</p>
-                        <p>{`$${spot.price} night`}</p>
+                        <p><span style={{fontWeight: 'bold'}}>${spot.price}</span> night</p>
                     </div>
-                    <p><IoMdStar />{spot.avgRating}</p>
+                    <p style={{fontWeight: 'bold'}}><IoMdStar />{spot.avgRating}</p>
                 </div>
                 </div>
             ))}

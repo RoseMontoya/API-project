@@ -75,7 +75,7 @@ const SpotDetailsPage = () => {
             {reviews.map(review => (
                 <div key={review.id}>
                     <h3>{review.User.firstName}</h3>
-                    {console.log(review)}
+                    {/* {console.log(review)} */}
                     <h4>{formatReviewDate(review.updatedAt)}</h4>
                     <p>{review.review}</p>
                 </div>

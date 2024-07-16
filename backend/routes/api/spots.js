@@ -140,6 +140,7 @@ const router = express.Router();
 
 // Get all Spots
 router.get('/', validateQuery, async (req, res) => {
+
     let {page, size, maxLat, minLat, minLng, maxLng, minPrice, maxPrice} = req.query;
 
     // Pagination
@@ -178,7 +179,7 @@ router.get('/', validateQuery, async (req, res) => {
             raw: true
         });
 
-        spotObj.avgRating = avg.avgRating !== null? +(Number(avg.avgRating).toFixed(1)) : 'No ratings';
+        spotObj.avgRating = avg.avgRating !== null? (avg.avgRating).toFixed(1) : 'No ratings';
 
 
         const previewImg = await SpotImage.findOne( {
@@ -246,6 +247,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
 // Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async (req, res, next) => {
+
     const spot = await Spot.findByPk(req.params.spotId);
     if (!spot) {
         const err = new Error("Spot couldn't be found");
@@ -352,7 +354,7 @@ router.get('/:spotId', async (req, res, next) => {
 
     // ! Quick fix for numReviews
     spotObj.numReviews = (spot.dataValues.numReviews)? +spot.dataValues.numReviews / 2 : 'No';
-    spotObj.avgStarRating = (spot.dataValues.avgStarRating) ? +(Number(spot.dataValues.avgStarRating).toFixed(1)): 'No ratings'
+    spotObj.avgStarRating = (spot.dataValues.avgStarRating) ? (spot.dataValues.avgStarRating).toFixed(1): 'No ratings'
 
     spotObj.SpotImages = await spot.getSpotImages({
         attributes: {

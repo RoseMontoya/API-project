@@ -77,35 +77,30 @@ input {
 }
 
 .image-container-square{
-  width: 12em;
-  height: 12em;
+  position: relative;
+  width: 11.6em;
+  height: 11.6em;
   overflow: hidden;
   display: flex;
-  /* align-items: center; */
   justify-content: center;
-  margin-bottom: 1em;
+  border-radius: 5px;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(11.6em, 1fr));
   gap: 1em;
   justify-items: center;
 }
 
-/* .grid-item {
-  padding: 1em;
-} */
-
-
-/* @media (min-width: 768px) {
-  .grid-container {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-} */
-
 @media (min-width: 1024px) {
+  .image-container-square{
+    position: relative;
+    width: 15em;
+    height: 15em;
+  }
+
   .grid-container {
-      grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
   }
 }
