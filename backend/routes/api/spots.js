@@ -179,7 +179,7 @@ router.get('/', validateQuery, async (req, res) => {
             raw: true
         });
 
-        spotObj.avgRating = avg.avgRating !== null? ((+spot.dataValues.avgStarRating).toFixed(1)): 'No ratings';
+        spotObj.avgRating = avg.avgRating !== null? ((+avg.avgRating).toFixed(1)): 'No ratings';
 
 
         const previewImg = await SpotImage.findOne( {
@@ -326,7 +326,7 @@ router.get('/:spotId', async (req, res, next) => {
     const spotId = req.params.spotId
     const spot = await Spot.findByPk(spotId, {
         attributes: {
-            include: [[Sequelize.fn('COUNT', Sequelize.col('Reviews.stars')), 'numReviews'],
+            include: [
                       [Sequelize.fn('avg', Sequelize.col('Reviews.stars')),'avgStarRating']]
         },
         include: [
@@ -353,7 +353,7 @@ router.get('/:spotId', async (req, res, next) => {
     const spotObj = await makeSpotObj(spot);
 
     // ! Quick fix for numReviews
-    spotObj.numReviews = (spot.dataValues.numReviews)? +spot.dataValues.numReviews / 2 : 'No';
+    spotObj.numReviews = await Review.count({where: { spotId: spotId}})
     spotObj.avgStarRating = (spot.dataValues.avgStarRating) ? ((+spot.dataValues.avgStarRating).toFixed(1)): 'No ratings'
 
     spotObj.SpotImages = await spot.getSpotImages({
