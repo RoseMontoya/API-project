@@ -24,6 +24,12 @@ const LandingPage = () => {
         navigate(`/spots/${spot.id}`)
     }
 
+    const formatRating = (avg) => {
+         let stars = (+avg).toFixed(1)
+        if (isNaN(stars)) stars = 'No Ratings'
+         return stars
+        }
+
     return (
         <main className='grid-container'>
             {spots.map(spot => (
@@ -39,7 +45,7 @@ const LandingPage = () => {
                         <p>{`${spot.city}, ${spot.state}`}</p>
                         <p><span style={{fontWeight: 'bold'}}>${spot.price}</span> night</p>
                     </div>
-                    <p style={{fontWeight: 'bold'}}><IoMdStar />{spot.avgRating}</p>
+                    <p style={{fontWeight: 'bold'}}><IoMdStar />{formatRating(spot.avgRating)}</p>
                 </div>
                 </div>
             ))}
