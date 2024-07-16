@@ -179,7 +179,7 @@ router.get('/', validateQuery, async (req, res) => {
             raw: true
         });
 
-        spotObj.avgRating = avg.avgRating !== null? ((+avg.avgRating).toFixed(1)): 'No ratings';
+        spotObj.avgRating = avg.avgRating !== null? ((+avg.avgRating).toFixed(1)): 'New';
 
 
         const previewImg = await SpotImage.findOne( {
@@ -354,7 +354,7 @@ router.get('/:spotId', async (req, res, next) => {
 
     // ! Quick fix for numReviews
     spotObj.numReviews = await Review.count({where: { spotId: spotId}})
-    spotObj.avgStarRating = (spot.dataValues.avgStarRating) ? ((+spot.dataValues.avgStarRating).toFixed(1)): 'No ratings'
+    spotObj.avgStarRating = (spot.dataValues.avgStarRating) ? ((+spot.dataValues.avgStarRating).toFixed(1)): 'New'
 
     spotObj.SpotImages = await spot.getSpotImages({
         attributes: {

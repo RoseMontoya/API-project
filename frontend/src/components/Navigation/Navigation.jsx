@@ -1,11 +1,19 @@
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import './Navigation.css';
 import { GiPalmTree } from "react-icons/gi";
 
 const Navigation = ({isLoaded}) => {
     const sessionUser = useSelector(state => state.session.user)
+    const navigate = useNavigate();
+
+    const handleClick = (e) => {
+        e.preventDefault();
+
+        console.log(e)
+        navigate('/spots/new')
+    }
 
     return (
         <nav>
@@ -17,9 +25,12 @@ const Navigation = ({isLoaded}) => {
                 </NavLink>
             </li>
             {isLoaded && (
+                <div id="user-nav">
+                <li className={sessionUser? '': 'hide'} onClick={handleClick}>Create a New Spot</li>
                 <li>
                     <ProfileButton user={sessionUser} />
                 </li>
+                </div>
             )}
         </ul>
         </nav>

@@ -16,7 +16,6 @@ const SpotDetailsPage = () => {
     const spot = useSelector(state => state.spots[spotId])
     const reviews = useSelector(state => Object.values(state.reviews));
 
-
     useEffect(() => {
         dispatch(loadSpot(spotId))
         dispatch(loadAllReviews(spotId))
@@ -33,8 +32,6 @@ const SpotDetailsPage = () => {
         }
     })
 
-    console.log(images)
-
     const formatReviewDate = (date) => {
         const dateSplit = date.split('-')
         const month = Number(dateSplit[1])
@@ -46,6 +43,12 @@ const SpotDetailsPage = () => {
         e.preventDefault();
 
         alert('Feature Coming Soon')
+    }
+
+    const numReviewsText = (numReviews) => {
+        if (numReviews === 0) return '';
+        if (numReviews === 1) return '1 review'
+        return `${numReviews} reviews`
     }
 
     return (
@@ -73,8 +76,8 @@ const SpotDetailsPage = () => {
                <li id="price"><span style={{fontSize: '18px', fontWeight:'500'}}>{`$${spot.price}`}</span>night</li>
                <div id="right">
                 <li><IoMdStar />{spot.avgStarRating}</li>
-                <LuDot />
-                <li>{spot.numReviews} reviews</li>
+                <LuDot className={spot.numReviews === 0? 'hide' : ''}/>
+                <li>{numReviewsText(spot.numReviews)}</li>
                </div>
             </ul>
             <button onClick={handleClick} id="reserve-button">Reserve</button>
@@ -86,8 +89,8 @@ const SpotDetailsPage = () => {
          <div>
             <ul id="reviews-stats">
                <li><IoMdStar />{spot.avgStarRating}</li>
-               <LuDot />
-               <li>{spot.numReviews} reviews</li>
+               <LuDot className={spot.numReviews === 0? 'hide': ''} />
+               <li>{numReviewsText(spot.numReviews)}</li>
             </ul>
             {reviews.map(review => (
                 <div key={review.id} className="review">

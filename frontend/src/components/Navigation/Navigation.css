@@ -72,7 +72,12 @@ li {
     font-weight: <weight>;
     font-style: normal;
     } */
-
+#user-nav {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    cursor: pointer;
+}
 
     #toggle-menu-button {
         height: max-content;

@@ -76,6 +76,10 @@ input {
   /* margin: 0px 16px 16px 16px; */
 }
 
+.hide {
+  display: none;
+}
+
 .image-container-square{
   position: relative;
   width: 11.6em;
