@@ -179,7 +179,7 @@ router.get('/', validateQuery, async (req, res) => {
             raw: true
         });
 
-        spotObj.avgRating = avg.avgRating !== null? avg.avgRating: 'No ratings';
+        spotObj.avgRating = avg.avgRating !== null? ((+spot.dataValues.avgStarRating).toFixed(1)): 'No ratings';
 
 
         const previewImg = await SpotImage.findOne( {

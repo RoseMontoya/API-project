@@ -32,59 +32,59 @@
 
 
 ## Extra Users
-{
+{ 6
   "firstName": "Leliana",
   "lastName": "Oisine",
   "email": "leliana@spymaster.com",
   "username": "TheNightingale",
   "password": "chantrysecrets"
-},
+}, 7
     firstName: "Josephine",
     lastName: "Montilyet",
     email: "josephine.montilyet@inquisition.com",
     username: "AmbassadorJosephine",
     hashedPassword: bcrypt.hashSync("diplomacy123")
-{
+{ 8
     "firstName": "Solas",
     "lastName": "Wolf",
     "email": "theDreadWolf@fade.com",
     "username": "ApostateSolas",
     "hashedPassword": bcrypt.hashSync("fadewalker123")
 },
-{
+{ 9
     "firstName": "Vivienne",
     "lastName": "de Fer",
     "email": "vivienne.defer@example.com",
     "username": "MadameDeFer",
     "hashedPassword": bcrypt.hashSync("imperialenvy999")
-}
+}10
      "firstName": "Iron",
     "lastName": "Bull",
     "email": "iron.bull@benhasarath.qun",
     "username": "IronBullQunari",
     "password": "strongestHorns123"
-
+  11
     "firstName": "Sera",
     "lastName": "",
     "email": "SeraTheMenace@red.jen",
     "username": "RedJenny",
     "password": "arrowsAndLaughs456"
 
-{
+{12
     "firstName": "Cullen",
     "lastName": "Rutherford",
     "email": "cullen.rutherford@inquisition.com",
     "username": "CommanderCullen",
     "password": "templarDuty789"
 }
-{
+{13
     "firstName": "Thom",
     "lastName": "Reiner",
     "email": "blackwall@inquisition.com",
     "username": "WardenBlackwall",
     "password": "seekingRedemption321"
 }
-{
+{14
     "firstName": "Cole",
     "lastName": "Compassion",
     "email": "SpiritofCompassion@fade.com",

@@ -43,6 +43,41 @@ const demoUsers = [
     "email": "dorian.pavus@tevinter.imperium",
     "username": "MageOfTevinter",
     hashedPassword: bcrypt.hashSync("magisterial123")
+  },
+  {
+    "firstName": "Leliana",
+    "lastName": "Oisine",
+    "email": "leliana@spymaster.com",
+    "username": "TheNightingale",
+    hashedPassword: bcrypt.hashSync("chantrysecrets")
+  },
+  {
+    firstName: "Josephine",
+    lastName: "Montilyet",
+    email: "josephine.montilyet@inquisition.com",
+    username: "AmbassadorJosephine",
+    hashedPassword: bcrypt.hashSync("diplomacy123")
+  },
+  {
+    "firstName": "Solas",
+    "lastName": "Wolf",
+    "email": "theDreadWolf@fade.com",
+    "username": "ApostateSolas",
+    "hashedPassword": bcrypt.hashSync("fadewalker123")
+  },
+  {
+    "firstName": "Vivienne",
+    "lastName": "de Fer",
+    "email": "vivienne.defer@example.com",
+    "username": "MadameDeFer",
+    "hashedPassword": bcrypt.hashSync("imperialenvy999")
+  },
+  {
+    "firstName": "Iron",
+    "lastName": "Bull",
+    "email": "iron.bull@benhasarath.qun",
+    "username": "IronBullQunari",
+    "hashedPassword": bcrypt.hashSync("strongestHorns123")
   }
 ];
 
@@ -65,7 +100,7 @@ module.exports = {
     options.tableName = 'Users';
     const Op = Sequelize.Op;
     return await queryInterface.bulkDelete(options, {
-      username: { [Op.in]: ["greywardenlover", "WickedWitchofTheWilds", "VarricT", "SeekerCassandra", "DorianPavus" ] }
+      username: { [Op.in]: ["greywardenlover", "WickedWitchofTheWilds", "VarricT", "SeekerCassandra", "DorianPavus", 'TheNightingale', 'AmbassadorJosephine', 'ApostateSolas', 'MadameDeFer', 'IronBullQunari' ] }
     }, {});
   }
 };

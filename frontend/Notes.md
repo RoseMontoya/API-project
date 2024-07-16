@@ -8,7 +8,11 @@ Colors:
 - Modify errors based on backend. Remove errors that are not neccessary in form.
 - Add profile pic feature
 - research the difference between useNavigate and Navigate
-- f
+- ### Spot Details
+    - refactor or smaller screens. Add in break at 550px. anything smaller, picture and reserve button should be flopped in direction
+    - add in review start amount next to name on
+    - make pictures rectangles instead of squares
+    - make spot description wrap around reserve button
 
 ## WireFrame Images
 ![alt text](images/Wireframe-images/Landing_page.png)

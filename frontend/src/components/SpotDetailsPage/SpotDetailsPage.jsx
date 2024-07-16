@@ -5,6 +5,7 @@ import { loadSpot } from "../../store/spot";
 import { IoMdStar } from "react-icons/io";
 import { LuDot } from "react-icons/lu";
 import { loadAllReviews } from "../../store/review";
+import './SpotDetails.css'
 
 const months = ["January","February","March","April","May","June","July",
             "August","September","October","November","December"]
@@ -23,16 +24,16 @@ const SpotDetailsPage = () => {
 
     if (!spot || !spot.SpotImages) return null;
 
-    let previewImageUrl;
-    const otherImages = [];
+    const images = [];
     spot.SpotImages.forEach(image => {
         if (image.preview === true) {
-            previewImageUrl = image.url;
+            images.unshift(image)
         } else {
-            otherImages.push(image)
+            images.push(image)
         }
-
     })
+
+    console.log(images)
 
     const formatReviewDate = (date) => {
         const dateSplit = date.split('-')
@@ -48,32 +49,48 @@ const SpotDetailsPage = () => {
     }
 
     return (
-        <>
-         <h2>{spot.name}</h2>
+        <main id="spot-details-page">
+
+         <h2 >{spot.name}</h2>
          <h3>{`${spot.city}, ${spot.state}, ${spot.country}`}</h3>
-         <img src={previewImageUrl} />
-         {otherImages.map(image => (
-            <img key={image.id} src={image.url} />
+
+        <div className="image-gallery">
+         {images.map((image, index) => (
+            <div key={image.id} className={`image-container image-${index + 1}`}>
+                {console.log(index)}
+                <img src={image.url} alt={`Image ${index + 1}`}/>
+            </div>
          ))}
+        </div>
+
+        <div id="spot-details">
          <div>
             <h2>{`Hosted by ${spot.Owner.firstName} ${spot.Owner.lastName}`}</h2>
             <p>{spot.description}</p>
          </div>
-         <ul>
-            <li>{`$${spot.price}`}<span>night</span></li>
-            <li><IoMdStar />{spot.avgStarRating}</li>
-            <li>{spot.numReviews} reviews</li>
-            <button onClick={handleClick}>Reserve</button>
-         </ul>
-         <hr></hr>
-         <div>
+         <div id="reserve">
             <ul>
+               <li id="price"><span style={{fontSize: '18px', fontWeight:'500'}}>{`$${spot.price}`}</span>night</li>
+               <div id="right">
+                <li><IoMdStar />{spot.avgStarRating}</li>
+                <LuDot />
+                <li>{spot.numReviews} reviews</li>
+               </div>
+            </ul>
+            <button onClick={handleClick} id="reserve-button">Reserve</button>
+         </div>
+        </div>
+
+         <hr></hr>
+
+         <div>
+            <ul id="reviews-stats">
                <li><IoMdStar />{spot.avgStarRating}</li>
-               <span><LuDot /></span>
+               <LuDot />
                <li>{spot.numReviews} reviews</li>
             </ul>
             {reviews.map(review => (
-                <div key={review.id}>
+                <div key={review.id} className="review">
                     <h3>{review.User.firstName}</h3>
                     {/* {console.log(review)} */}
                     <h4>{formatReviewDate(review.updatedAt)}</h4>
@@ -81,7 +98,7 @@ const SpotDetailsPage = () => {
                 </div>
             ))}
          </div>
-        </>
+        </main>
     )
 
 };

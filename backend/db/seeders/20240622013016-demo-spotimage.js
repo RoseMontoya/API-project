@@ -9,13 +9,13 @@ if (process.env.NODE_ENV === 'production') {
 
 const demoSpotImages = [
   {
-    spotId: 1,
+    spotId: 4,
     url: "https://i.quotev.com/oq3izkvagcnq.jpg",
     preview: true
 
   },
   {
-    spotId: 1,
+    spotId: 4,
     url: "https://static.wikia.nocookie.net/dragonage/images/5/54/Soldier%27s_Peak_Entrance_Hall.png/revision/latest/scale-to-width-down/1000?cb=20131002094537"
   },
   {
@@ -28,6 +28,18 @@ const demoSpotImages = [
     url: "https://lh3.googleusercontent.com/fife/ALs6j_GqR0w0sjoorZ0dKoWylcKmpoZ4zfH3uO__NslHOZRO17eez1FV66yg8bHJRl6aA1D95KBZM-zUb5TZ50J1LFtr_DjHw3ij_x-osxNchpANdFVLhh0xzgVFkbdkZxkUj1Jvl8wzwQfTWFyJ51ddcs0ZU3zpvkMY5XsAlgNYP_6v1vTs_ZJrvz6yPVUOmJvzlOHKZfux_4Jcn_CSBrFKV-TIY5DMLTI0t8gnVCmU_ioK558jFKQrhRcL-jHiyESAbS4pQONcP7V9gQzHuAhCsFlYewigHQ7ymPFIFYtIsmIOB2a_LPr6AAEBv08mMrtLH-sp9V2Brj2kjLnsQFB5VvM3jYVuZYudw-fjPq-D6X32v9hCn_P6v6AdfLfDpSTEqekPcwusPzX6Dl_mf8UBu0VKVLzpufbBq1jnyGLZmjJ3EbmWMTfqe5iIyCRg_62X6Q-_gY_XaSeRJu6mk1cVd2x7qf2JNtiDfB2A24N7TkdPifhJgi95nXvXFjcbReh9vtSG_fnIkbVWVSEA1ztd0KNV8atC3SRCPEhb_qGBmP9EeFTmiX7uFdit0-oTEHB9LaeDqNtazKCAefOugoGPpbVGbKsaFgAHs1Zfd_O1yOPZIKtOAypnq3F0-pCzyXNFMyAhCWh3USVHHzHA9reUS1vdFhUTghMzwLOXUZCM-92Ps9h9OmdYki6gMVzu8qxkWThittCUNTnQDDZ-qAxDfAYdLuRDhgPwBLzLau1GQ4JVVrrCCyvU7zI5qjUr8uQSd2iVEQm2qCrUARxogP-BrJrZPNXm79nweHSVFiPW07IXH1KfRp3VsR1fnAFgNHOnNP6VHVRp3CH4m3kB3Tg5_BFXJjGLZC-yiaheRYKRJmdx0GZd3QZ3UweZ0YknRInppZ6rUNfBvxQ763Fsslmlmcs28oQ3-hpMhBuEwFpGfNHpVSc_tkV_u56Kffxwn7QydNYTffpXRPRI3KfAQGPEtxDhqGQvTTvO1rQNBkX0yV9sOjR4yOY_Xi8-_U9G8N1wkNJ20Q1q0lwJ30Tv8opkEVpXt1k6h9zi67GdRZIJpr943_nJIls6Xy-gn1Xb16W2d7fBEXdr9HUoZ0vDE3A-nzLSAu1_prgEW9NqsECErqrFlw88PGvfUd2pTE6mdMmDd1NASLMtvrflh9yKw1YLi8ERcI1LCP7DhChB-XOz8jFqJ5qSj2mTiAZSSDYmWPaMTNulm-outMJT8G6CAPhr3xaqqRfyXlViPnG_B6nku0iZwM8ZkIwSa0C4WrDHr8GchTNFFvxNtLU0CuGD2Tfm0m61cOIMtNtR0f_FTLHz9qEWd7aGy2CnvEcjop9M2ss7qEnbfKMpuEbXUidE2Jt1nuwu3BXJQENg6c-z4G_3uT9Bp-e8Q-6i=s512"
   },
   {
+    spotId: 2,
+    url: 'https://s3.amazonaws.com/prod-media.gameinformer.com/styles/body_default/s3/legacy-galleries/48628/Skyhold_WM_02_0.jpg'
+  },
+  {
+    spotId: 2,
+    url: 'https://static1.cbrimages.com/wordpress/wp-content/uploads/2021/02/Dragon-Age-Skyhold-yard.jpg'
+  },
+  {
+    spotId: 2,
+    url: 'https://s3.amazonaws.com/prod-media.gameinformer.com/styles/body_default/s3/legacy-galleries/48628/Skyhold_WM_03_0.jpg'
+  },
+  {
     spotId: 3,
     url: "https://i.quotev.com/4k7vejdkxhja.jpg",
     preview: true
@@ -37,13 +49,25 @@ const demoSpotImages = [
     url: "https://starandshadow.wordpress.com/wp-content/uploads/2015/03/emerald-graves.jpg?w=300"
   },
   {
-    spotId: 4,
+    spotId: 1,
     url: "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2022/11/ser.jpg?q=50&fit=contain&w=1140&h=&dpr=1.5",
     preview: true
   },
   {
-    spotId: 4,
+    spotId: 1,
     url: "https://static0.gamerantimages.com/wordpress/wp-content/uploads/2023/08/dragon_age_dreadwolf_concept_art.jpg?q=50&fit=contain&w=1140&h=&dpr=1.5"
+  },
+  {
+    spotId:1,
+    url: "https://static1.thegamerimages.com/wordpress/wp-content/uploads/2021/02/Dragon-Age-4-Minrathous.png"
+  },
+  {
+    spotId:1,
+    url: 'https://assetsio.gnwcdn.com/dragon-age-the-veilguard-04.jpg?width=1200&height=1200&fit=bounds&quality=70&format=jpg&auto=webp'
+  },
+  {
+    spotId:1,
+    url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNGOqhmtfUQHrcwuQ-3OGHFH7fYRh2jHPoIg&s'
   },
   {
     spotId: 5,
