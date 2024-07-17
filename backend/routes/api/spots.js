@@ -237,7 +237,7 @@ router.get('/current', requireAuth, async (req, res) => {
             raw: true
         });
 
-        spotObj.avgRating = avg.avgRating !== null? +(Number(avg.avgRating).toFixed(1)) : 'No ratings';
+        spotObj.avgRating = avg.avgRating !== null? ((+avg.avgRating).toFixed(1)) : 'New';
 
 
         const previewImg = await SpotImage.findOne( {

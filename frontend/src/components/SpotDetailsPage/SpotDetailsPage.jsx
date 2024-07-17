@@ -13,8 +13,9 @@ const months = ["January","February","March","April","May","June","July",
 const SpotDetailsPage = () => {
     const dispatch = useDispatch()
     const {spotId }= useParams()
-    const spot = useSelector(state => state.spots[spotId])
+    const spot = useSelector(state => state.spots.spots[spotId])
     const reviews = useSelector(state => Object.values(state.reviews));
+    console.log(spot)
 
     useEffect(() => {
         dispatch(loadSpot(spotId))

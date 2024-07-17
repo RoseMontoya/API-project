@@ -2,6 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const LOAD_SPOTS = 'store/spot/LOAD_SPOTS'
 const ADD_SPOT = 'store/spot/ADD_SPOT'
+const LOAD_CURRENT_SPOTS = 'store/spot/LOAD_CURRENT_SPOTS'
 
 
 // Action
@@ -19,6 +20,12 @@ const addSpot = (spot) => {
     }
 }
 
+const currentSpots = (spots) => {
+    return {
+        type: LOAD_CURRENT_SPOTS,
+        spots
+    }
+}
 
 
 // Thunk
@@ -56,6 +63,13 @@ export const addSpotImage = (image, spotId) => async dispatch => {
     return response
 }
 
+export const loadCurrentSpots = () => async dispatch => {
+    const response = await csrfFetch('/api/spots/current')
+    const data = await response.json();
+    dispatch(currentSpots(data.Spots))
+    return data.Spots
+}
+
 
 // Reducer
 
@@ -66,10 +80,18 @@ const spotReducer = (state = {}, action) => {
             action.spots.forEach(spot => {
                 spots[spot.id] = spot
             })
-            return {...state, ...spots}
+            return {...state, spots:{...spots}}
         }
         case ADD_SPOT: {
             return {...state, [action.spot.id]: action.spot}
+        }
+        case LOAD_CURRENT_SPOTS: {
+            const currentSpots = {};
+            action.spots.forEach(spot => {
+                currentSpots[spot.id] = spot
+            });
+            return {...state, currentSpots: {...currentSpots}}
+
         }
         default:
             return state;

@@ -61,7 +61,7 @@ const ProfileButton = ({user}) => {
                 <li>Hello, {user.firstName}</li>
                 <li>{user.email}</li>
                 <hr></hr>
-                <li>Manage Spots</li>
+                <li onClick={()=> navigate('/spots/current')}>Manage Spots</li>
                 <hr></hr>
                 <li id="logout">
                     <button onClick={logoutClick}>Log Out</button>

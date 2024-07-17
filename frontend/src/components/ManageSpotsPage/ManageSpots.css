@@ -1,0 +1,15 @@
+#manage-spots-page h2 {
+    text-align: start;
+    margin: 0;
+}
+
+#manage-spots-page button {
+    padding: .25em .5em;
+    margin-bottom: 3em;
+}
+
+#button-container {
+    display: flex;
+    gap: .5em;
+    padding-top: 1em;
+}

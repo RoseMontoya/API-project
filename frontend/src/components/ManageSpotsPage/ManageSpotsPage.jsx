@@ -1,33 +1,34 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom'
-import { loadAllSpots } from '../../store/spot';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { loadCurrentSpots } from "../../store/spot";
 import { IoMdStar } from "react-icons/io";
-import './LandingPage.css'
+import './ManageSpots.css'
 
-const LandingPage = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const spotsObj = useSelector(state => state.spots.spots);
+
+const ManageSpotsPage = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const spotsObj = useSelector(state => state.spots.currentSpots)
 
     useEffect(() => {
-        dispatch(loadAllSpots())
+        dispatch(loadCurrentSpots())
     }, [dispatch])
 
     if (!spotsObj) return null;
 
-    const spots = Object.values(spotsObj)
-
-
+    const spots = Object.values(spotsObj);
 
     const handleClick = (spot) => {
         navigate(`/spots/${spot.id}`)
     }
 
     return (
-        <main className='grid-container'>
-            {spots.sort((a, b) => b.id - a.id)
-                .map(spot => (
+        <main id="manage-spots-page">
+            <h2>Manage Your Spots</h2>
+            <button onClick={() => navigate('/spots/new')}>Create a New Spot</button>
+            <div className='grid-container'>
+            {spots.sort((a, b) => b.id - a.id).map(spot => (
                 <div key={spot.id} className='grid-item'
                 onClick={() => handleClick(spot)}
                 >
@@ -42,10 +43,15 @@ const LandingPage = () => {
                     </div>
                     <p style={{fontWeight: 'bold'}}><IoMdStar />{spot.avgRating}</p>
                 </div>
+                <div id="button-container">
+                    <button>Update</button>
+                    <button>Delete</button>
+                </div>
                 </div>
             ))}
+            </div>
         </main>
     )
-};
+}
 
-export default LandingPage;
+export default ManageSpotsPage;

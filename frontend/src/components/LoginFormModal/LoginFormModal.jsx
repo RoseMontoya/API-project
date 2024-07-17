@@ -32,9 +32,7 @@ const LoginFormModal = () => {
     }
 
     const demoUser = () => {
-        setCredential('MageOfTevinter');
-        setPassword('magisterial123');
-        return dispatch(login({credential, password}))
+        dispatch(login({credential: 'MageOfTevinter', password: 'magisterial123' }))
             .then(closeModal);
     }
 
