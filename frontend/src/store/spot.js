@@ -70,6 +70,16 @@ export const loadCurrentSpots = () => async dispatch => {
     return data.Spots
 }
 
+export const editSpot = (spot, spotId) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
+        body: JSON.stringify(spot)
+    })
+    const updatedSpot = await response.json();
+    dispatch(addSpot(updatedSpot));
+    return updatedSpot;
+}
+
 
 // Reducer
 

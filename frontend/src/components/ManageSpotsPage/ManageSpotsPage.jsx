@@ -29,9 +29,8 @@ const ManageSpotsPage = () => {
             <button onClick={() => navigate('/spots/new')}>Create a New Spot</button>
             <div className='grid-container'>
             {spots.sort((a, b) => b.id - a.id).map(spot => (
-                <div key={spot.id} className='grid-item'
-                onClick={() => handleClick(spot)}
-                >
+                <div key={spot.id} className='grid-item'>
+                <div onClick={() => handleClick(spot)}>
                 <div className='image-container-square'>
                     <p className='name' data->{spot.name}</p>
                     <img src={spot.previewImage}/>
@@ -43,8 +42,9 @@ const ManageSpotsPage = () => {
                     </div>
                     <p style={{fontWeight: 'bold'}}><IoMdStar />{spot.avgRating}</p>
                 </div>
+                </div>
                 <div id="button-container">
-                    <button>Update</button>
+                    <button onClick={() => navigate(`/spots/${spot.id}/edit`)}>Update</button>
                     <button>Delete</button>
                 </div>
                 </div>

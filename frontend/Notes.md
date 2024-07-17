@@ -15,6 +15,8 @@ Colors:
     - make pictures rectangles instead of squares
     - make spot description wrap around reserve button
     - make sure that month is correct month
+- ### Edit Spot Form
+    - refactor useState, so I can call it once in use Effect
 
 ## WireFrame Images
 ![alt text](images/Wireframe-images/Landing_page.png)

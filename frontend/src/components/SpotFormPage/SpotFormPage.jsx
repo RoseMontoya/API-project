@@ -1,27 +1,74 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addSpotImage, createSpot } from "../../store/spot";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addSpotImage, createSpot, editSpot } from "../../store/spot";
+import { useNavigate, useParams } from "react-router-dom";
+import { loadSpot} from "../../store/spot";
 
-const SpotFormPage = () => {
+
+const SpotFormPage = ({formType}) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [country, setCountry] = useState('');
-    const [address, setAddress] = useState('');
-    const [city, setCity] = useState('');
-    const [state, setState] = useState('');
-    const [lat, setLat] = useState('');
-    const [lng, setLng] = useState('');
-    const [description, setDescription] = useState('');
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
+    const {spotId} = useParams()
+    const spot = useSelector(state => {
+        if (spotId && state.spots.spots) return state.spots.spots[spotId]
+    })
 
-    const [previewImageUrl, setPreviewImageUrl] = useState('');
-    const [image1, setImage1] = useState('');
-    const [image2, setImage2] = useState('');
-    const [image3, setImage3] = useState('');
-    const [image4, setImage4] = useState('');
+    const [spotDetails, setSpotDetails] = useState({
+        country : '',
+        address: '',
+        city : '',
+        state : '',
+        lat : '',
+        lng : '',
+        description : '',
+        name : '',
+        price : '',
+    })
+    // console.log(spotDetails)
+    const images = [];
+    if (spot?.SpotImages) {
+        spot.SpotImages.forEach(image => {
+            if (image.preview === true) {
+                images.unshift(image.url)
+            } else {
+                images.push(image.url)
+            }
+        })
+    }
+
+    const [imageUrls, setImageUrls] = useState({
+        previewImageUrl : '',
+        image1: '',
+        image2: '',
+        image3: '',
+        image4: ''
+    })
+
+    useEffect(() => {
+        if (spotId && !spot) {
+            dispatch(loadSpot(spotId))
+        } else if (spot) {
+            setSpotDetails({
+                country :spot?.country,
+                address: spot?.state ,
+                city : spot?.city,
+                state : spot?.state,
+                lat : spot?.lat ,
+                lng : spot?.lng ,
+                description : spot?.description,
+                name : spot?.name,
+                price : spot?.price,
+            })
+            setImageUrls({
+                previewImageUrl : images[0],
+                image1: images[1],
+                image2: images[2],
+                image3: images[3],
+                image4: images[4]
+            })
+        }
+    }, [dispatch, spotId, spot])
 
     const [errors, setErrors] = useState({})
 
@@ -31,48 +78,66 @@ const SpotFormPage = () => {
         setErrors({})
 
         const newSpot = {
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            description,
-            price
+            address: spotDetails.address,
+            city: spotDetails.city,
+            state: spotDetails.state,
+            country: spotDetails.country,
+            lat: spotDetails.lat,
+            lng: spotDetails.lng,
+            name: spotDetails.name,
+            description: spotDetails.description,
+            price: spotDetails.price
         }
 
         const errs = {}
-        if (!previewImageUrl) errs.previewImageUrl = 'Preview image is required.'
+        if (!imageUrls.previewImageUrl) errs.previewImageUrl = 'Preview image is required.'
 
-        const images = [{ url: previewImageUrl, preview: true }]
+        const images = [{ url: imageUrls.previewImageUrl, preview: true }]
 
         const urlCheck = (url) => {
-            const urlEnd = url.split('.')[1]
+            const urlSplit = url.split('.')
+            const urlEnd = urlSplit[urlSplit.length - 1]
             if (!["png", "jpg", "jpeg"].includes(urlEnd)) {
                 return false;
             }
             return true;
         }
 
-        if (image1) {
-            if (urlCheck(image1)) images.push({ url: image1 });
+        if (imageUrls.image1) {
+            if (urlCheck(imageUrls.image1)) images.push({ url: imageUrls.image1 });
             else errs.image1 = 'Image URL must end in .png, .jpg, or .jpeg'
         }
-        if (image2) {
-            if (urlCheck(image2)) images.push({ url: image2 });
+        if (imageUrls.image2) {
+            if (urlCheck(imageUrls.image2)) images.push({ url: imageUrls.image2 });
             else errs.image2 = 'Image URL must end in .png, .jpg, or .jpeg'
         }
-        if (image3) {
-            if (urlCheck(image3)) images.push({ url: image3 });
+        if (imageUrls.image3) {
+            if (urlCheck(imageUrls.image3)) images.push({ url: imageUrls.image3 });
             else errs.image3 = 'Image URL must end in .png, .jpg, or .jpeg'
         }
-        if (image4) {
-            if (urlCheck(image4)) images.push({ url: image4 });
+        if (imageUrls.image4) {
+            if (urlCheck(imageUrls.image4)) images.push({ url: imageUrls.image4 });
             else errs.image4 = 'Image URL must end in .png, .jpg, or .jpeg'
         }
 
-        dispatch(createSpot(newSpot))
+        if (formType === 'Create') {
+            dispatch(createSpot(newSpot))
+                .then(res => {
+                    images.map(async image => {
+                        dispatch(addSpotImage(image, res.id))
+                    })
+                    return res;
+                })
+                .then(res => {
+                    navigate(`/spots/${res.id}`);
+                })
+                .catch(async err => {
+                    const data = await err.json();
+                    const newErrors = {...errs, ...data.errors}
+                    setErrors(newErrors)
+                })
+        } else {
+            dispatch(editSpot(newSpot, spotId))
             .then(res => {
                 images.map(async image => {
                     dispatch(addSpotImage(image, res.id))
@@ -87,11 +152,31 @@ const SpotFormPage = () => {
                 const newErrors = {...errs, ...data.errors}
                 setErrors(newErrors)
             })
+        }
+    }
+
+    const demoSpot = () => {
+        setSpotDetails({
+            "address": "5 Winter Palace",
+            "city": "Val Royeaux",
+            "state": "Orlais",
+            "country": "Thedas",
+            "lat": 45.5088,
+            "lng": -73.554,
+            "name": "Orlesian Splendor",
+            "description": "Exquisite palace apartment with views of the Fountain Courtyard in Val Royeaux",
+            "price": 500
+        })
+        setImageUrls({previewImageUrl : 'https://i.quotev.com/o7dxwda3ssma.jpg'})
     }
 
     return (
         <main>
+            {formType === 'Create'? <>
             <h2>Create New Spot</h2>
+            <h3 onClick={() => demoSpot()}>Demo Spot</h3>
+            </> : <h2>Edit your Spot</h2>}
+
             <form onSubmit={handleSubmit}>
 
                 <h3>Where&apos;s your place located?</h3>
@@ -102,8 +187,8 @@ const SpotFormPage = () => {
                     <input
                         type="text"
                         placeholder="Country"
-                        value={country}
-                        onChange={(e) => setCountry(e.target.value)}
+                        value={spotDetails.country}
+                        onChange={(e) => setSpotDetails({...spotDetails,country: e.target.value})}
                         name='country'
                     />
                 </label>
@@ -113,8 +198,8 @@ const SpotFormPage = () => {
                     <input
                         type="text"
                         placeholder="Address"
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        value={spotDetails.address}
+                        onChange={(e) => setSpotDetails({...spotDetails,address: e.target.value })}
                         name='address'
                     />
                 </label>
@@ -124,8 +209,8 @@ const SpotFormPage = () => {
                     <input
                         type="text"
                         placeholder="City"
-                        value={city}
-                        onChange={(e) => setCity(e.target.value)}
+                        value={spotDetails.city}
+                        onChange={(e) => setSpotDetails({...spotDetails,city: e.target.value })}
                         name='city'
                     />,
                 </label>
@@ -135,8 +220,8 @@ const SpotFormPage = () => {
                     <input
                         type="text"
                         placeholder="STATE"
-                        value={state}
-                        onChange={(e) => setState(e.target.value)}
+                        value={spotDetails.state}
+                        onChange={(e) => setSpotDetails({...spotDetails, state: e.target.value })}
                         name='state'
                     />
                 </label>
@@ -146,8 +231,8 @@ const SpotFormPage = () => {
                     <input
                         type="text"
                         placeholder="Latitude"
-                        value={lat}
-                        onChange={(e) => setLat(e.target.value)}
+                        value={spotDetails.lat}
+                        onChange={(e) => setSpotDetails({...spotDetails, lat: e.target.value })}
                         name='latitude'
                     />
                 </label>
@@ -157,8 +242,8 @@ const SpotFormPage = () => {
                     <input
                         type="text"
                         placeholder="Longitude"
-                        value={lng}
-                        onChange={(e) => setLng(e.target.value)}
+                        value={spotDetails.lng}
+                        onChange={(e) => setSpotDetails({...spotDetails, lng: e.target.value })}
                         name='longitude'
                     />
                 </label>
@@ -170,8 +255,8 @@ const SpotFormPage = () => {
                 <textarea
                     rows='10'
                     placeholder="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    value={spotDetails.description}
+                    onChange={(e) => setSpotDetails({...spotDetails, description: e.target.value })}
                     name='description'
                 />
                 {errors?.description && <p className="error">Description needs a minimum of 30 characters</p>}
@@ -183,8 +268,8 @@ const SpotFormPage = () => {
                 <input
                     type="text"
                     placeholder="Name of your spot"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={spotDetails.name}
+                    onChange={(e) => setSpotDetails({...spotDetails, name: e.target.value })}
                     name='name'
                 />
                 {errors?.name && <p className="error">{errors?.name}</p>}
@@ -196,8 +281,8 @@ const SpotFormPage = () => {
                 $<input
                     type="text"
                     placeholder="Price per night (USD)"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    value={spotDetails.price}
+                    onChange={(e) => setSpotDetails({...spotDetails, price: e.target.value })}
                     name='price'
                 />
                 {errors?.price && <p className="error">{errors?.price}</p>}
@@ -209,46 +294,46 @@ const SpotFormPage = () => {
                 <input
                     type="text"
                     placeholder="Preview Image URL"
-                    value={previewImageUrl}
-                    onChange={(e) => setPreviewImageUrl(e.target.value)}
+                    value={imageUrls.previewImageUrl}
+                    onChange={(e) => setImageUrls({...imageUrls, previewImageUrl: e.target.value})}
                     name='previewImageUrl'
                 />
                 {errors?.previewImageUrl && <p className="error">{errors?.previewImageUrl}</p>}
                 <input
                     type="text"
                     placeholder="Image URL"
-                    value={image1}
-                    onChange={(e) => setImage1(e.target.value)}
+                    value={imageUrls.image1}
+                    onChange={(e) => setImageUrls({...imageUrls, image1: e.target.value})}
                     name='image1'
                 />
                 {errors?.image1 && <p className="error">{errors.image1}</p>}
                 <input
                     type="text"
                     placeholder="Image URL"
-                    value={image2}
-                    onChange={(e) => setImage2(e.target.value)}
+                    value={imageUrls.image2}
+                    onChange={(e) => setImageUrls({...imageUrls, image2: e.target.value})}
                     name='image2'
                 />
                 {errors?.image2 && <p className="error">{errors.image2}</p>}
                 <input
                     type="text"
                     placeholder="Image URL"
-                    value={image3}
-                    onChange={(e) => setImage3(e.target.value)}
+                    value={imageUrls.image3}
+                    onChange={(e) => setImageUrls({...imageUrls, image3: e.target.value})}
                     name='image3'
                 />
                 {errors?.image3 && <p className="error">{errors.image3}</p>}
                 <input
                     type="text"
                     placeholder="Image URL"
-                    value={image4}
-                    onChange={(e) => setImage4(e.target.value)}
+                    value={imageUrls.image4}
+                    onChange={(e) => setImageUrls({...imageUrls, image4: e.target.value})}
                     name='image4'
                 />
                 {errors?.image4 && <p className="error">{errors.image4}</p>}
 
                 <hr></hr>
-                <button type="sumbit">Create Button</button>
+                {formType === 'Create'? <button type="sumbit">Create Spot</button> : <button type="sumbit">Update Your Spot</button>}
 
             </form>
         </main>
