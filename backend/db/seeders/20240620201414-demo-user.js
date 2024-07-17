@@ -73,8 +73,8 @@ const demoUsers = [
     "hashedPassword": bcrypt.hashSync("imperialenvy999")
   },
   {
-    "firstName": "Iron",
-    "lastName": "Bull",
+    "firstName": "Iron Bull",
+    "lastName": "Charger",
     "email": "iron.bull@benhasarath.qun",
     "username": "IronBullQunari",
     "hashedPassword": bcrypt.hashSync("strongestHorns123")

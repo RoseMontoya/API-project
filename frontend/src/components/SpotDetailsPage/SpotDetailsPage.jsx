@@ -13,9 +13,16 @@ const months = ["January","February","March","April","May","June","July",
 const SpotDetailsPage = () => {
     const dispatch = useDispatch()
     const {spotId }= useParams()
-    const spot = useSelector(state => state.spots.spots[spotId])
-    const reviews = useSelector(state => Object.values(state.reviews));
-    console.log(spot)
+    const spot = useSelector(state => {
+        if (state.spots.spots) {
+            return state.spots.spots[spotId]
+        }
+    })
+    const reviewsObj = useSelector(state => state.reviews);
+    const reviews = Object.values(reviewsObj)
+    const user = useSelector(state => state.session.user)
+
+
 
     useEffect(() => {
         dispatch(loadSpot(spotId))
@@ -33,12 +40,6 @@ const SpotDetailsPage = () => {
         }
     })
 
-    const formatReviewDate = (date) => {
-        const dateSplit = date.split('-')
-        const month = Number(dateSplit[1])
-        const year = dateSplit[0]
-        return `${months[month]} ${year}`
-    }
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -52,6 +53,20 @@ const SpotDetailsPage = () => {
         return `${numReviews} reviews`
     }
 
+    const showReviewButton = () => {
+        if (user && user.id !== spot.ownerId) {
+            return true;
+        }
+        return false
+    }
+    const formatReviewDate = (date) => {
+        const dateSplit = date.split('-')
+        const month = Number(dateSplit[1])
+        const year = dateSplit[0]
+        return `${months[month - 1]} ${year}`
+    }
+
+    console.log((!reviews))
     return (
         <main id="spot-details-page">
 
@@ -92,13 +107,17 @@ const SpotDetailsPage = () => {
                <LuDot className={spot.numReviews === 0? 'hide': ''} />
                <li>{numReviewsText(spot.numReviews)}</li>
             </ul>
-            {reviews.map(review => (
+            <button style={{marginTop: '1em'}}className={showReviewButton()? "" : 'hide'}>Post Your Review</button>
+            {(!reviews.length) && showReviewButton()? <p>Be the first to post a Review!</p> : reviews.sort((a, b) => b.id - a.id).map(review => (
                 <div key={review.id} className="review">
                     <h3>{review.User.firstName}</h3>
                     <h4>{formatReviewDate(review.updatedAt)}</h4>
                     <p>{review.review}</p>
                 </div>
-            ))}
+            ))
+
+        }
+
          </div>
         </main>
     )

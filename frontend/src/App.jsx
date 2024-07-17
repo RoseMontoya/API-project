@@ -41,7 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'spots/new',
-        element: <SpotFormPage />
+        element: <SpotFormPage formType={'Create'}/>
+      },
+      {
+        path: 'spots/:spotId/edit',
+        element: <SpotFormPage formType={'Edit'}/>
       },
       {
         path: 'spots/current',

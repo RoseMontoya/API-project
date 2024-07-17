@@ -8,6 +8,7 @@ Colors:
 - Modify errors based on backend. Remove errors that are not neccessary in form.
 - Add profile pic feature
 - research the difference between useNavigate and Navigate
+- fix log in with nagivation to home screen
 - ### Spot Details
     - refactor or smaller screens. Add in break at 550px. anything smaller, picture and reserve button should be flopped in direction
     - add in review start amount next to name on

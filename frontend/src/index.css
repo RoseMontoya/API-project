@@ -2,7 +2,8 @@
 body {
   font-size: 14pt;
   margin: 0;
-  font-family: "Quicksand", sans-serif;;
+  font-family: "Quicksand", sans-serif;
+  padding-bottom: 2em;
 }
 
 form {
@@ -32,6 +33,7 @@ button {
   box-shadow: 2px 2px 0px black;
   justify-content: center;
 }
+
 
 button:hover {
   cursor: pointer;

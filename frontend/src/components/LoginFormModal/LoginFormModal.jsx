@@ -3,9 +3,12 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../store/session.js';
 import { useModal } from '../../context/modal.jsx';
 import './LoginForm.css';
+// import { useNavigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 
 const LoginFormModal = () => {
     const dispatch = useDispatch();
+    // const navigate = useNavigate()
 
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
@@ -33,7 +36,9 @@ const LoginFormModal = () => {
 
     const demoUser = () => {
         dispatch(login({credential: 'MageOfTevinter', password: 'magisterial123' }))
-            .then(closeModal);
+            .then(closeModal)
+            // .then(<Navigate to='/' replace="true"/>)
+            // .then(navigate('/'))
     }
 
     useEffect(() => {
