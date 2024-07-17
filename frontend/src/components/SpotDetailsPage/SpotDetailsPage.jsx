@@ -1,10 +1,13 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { loadSpot } from "../../store/spot";
 import { IoMdStar } from "react-icons/io";
 import { LuDot } from "react-icons/lu";
 import { loadAllReviews } from "../../store/review";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
+import ReviewFormModal from "../ReviewFormModal";
+
 import './SpotDetails.css'
 
 const months = ["January","February","March","April","May","June","July",
@@ -21,6 +24,8 @@ const SpotDetailsPage = () => {
     const reviewsObj = useSelector(state => state.reviews);
     const reviews = Object.values(reviewsObj)
     const user = useSelector(state => state.session.user)
+    const [showMenu, setShowMenu] = useState(false);
+    const closeMenu = () => setShowMenu(false);
 
 
 
@@ -107,7 +112,12 @@ const SpotDetailsPage = () => {
                <LuDot className={spot.numReviews === 0? 'hide': ''} />
                <li>{numReviewsText(spot.numReviews)}</li>
             </ul>
-            <button style={{marginTop: '1em'}}className={showReviewButton()? "" : 'hide'}>Post Your Review</button>
+            <OpenModalMenuItem
+                itemText="Post Your Review"
+                onItemClick={closeMenu}
+                modalComponent={<ReviewFormModal />}
+              />
+            {/* <button style={{marginTop: '1em'}}className={showReviewButton()? "" : 'hide'}>Post Your Review</button> */}
             {(!reviews.length) && showReviewButton()? <p>Be the first to post a Review!</p> : reviews.sort((a, b) => b.id - a.id).map(review => (
                 <div key={review.id} className="review">
                     <h3>{review.User.firstName}</h3>

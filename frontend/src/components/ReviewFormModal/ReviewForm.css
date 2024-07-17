@@ -1,0 +1,17 @@
+#create-review-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1em 1em 1em;
+    align-items: center;
+}
+
+#stars {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#create-review-container button {
+    padding: 1em;
+    width: 100%;
+}

@@ -47,6 +47,18 @@ input {
   width: 100%;
 }
 
+textarea {
+  border: solid 2px black;
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-color: #E8F0FE;
+  font-weight: 500;
+  width: 100%;
+  resize: none;
+  padding: .5em;
+
+}
+
 p {
   font-size: 14px;
 }
