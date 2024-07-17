@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { addSpotImage, createSpot } from "../../store/spot";
 import { useNavigate } from "react-router-dom";
 
@@ -94,7 +94,7 @@ const SpotFormPage = () => {
             <h2>Create New Spot</h2>
             <form onSubmit={handleSubmit}>
 
-                <h3>Where's your place located?</h3>
+                <h3>Where&apos;s your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation.</p>
                 <label>
                     Country
@@ -179,7 +179,7 @@ const SpotFormPage = () => {
                 <hr></hr>
 
                 <h3>Create a title for your spot</h3>
-                <p>Catch guests' attention with a spot title that highlights what makes your place special.</p>
+                <p>Catch guests&apos; attention with a spot title that highlights what makes your place special.</p>
                 <input
                     type="text"
                     placeholder="Name of your spot"
