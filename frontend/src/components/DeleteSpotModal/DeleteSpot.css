@@ -1,0 +1,38 @@
+.delete-button {
+    display: flex;
+    background-color: #f44336 ;
+    align-items: center;
+    color: white;
+    border: solid 2px black;
+    box-shadow: 2px 2px 0px black;
+    justify-content: center;
+    padding: .25em .5em;
+    font-size: 14px;
+    height: fit-content;
+}
+
+#delete-form {
+    padding: 1em;
+    max-width: 20em;
+}
+
+#delete-form h2 {
+    margin: 0;
+}
+
+#delete-form p {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+#delete-form button {
+    width: 100%;
+    padding: 1em;
+    font-weight: 600;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}

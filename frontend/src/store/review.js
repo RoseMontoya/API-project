@@ -1,15 +1,14 @@
-import { csrfFetch } from "./csrf";
-import { loadSpot } from "./spot";
+// import { csrfFetch } from "./csrf";
 
 const LOAD_REVIEWS = '/store/review/LOAD_REVIEWS'
 
 // Action
-const loadReviews = (reviews) => {
-    return {
-        type: LOAD_REVIEWS,
-        reviews
-    }
-}
+// const loadReviews = (reviews) => {
+//     return {
+//         type: LOAD_REVIEWS,
+//         reviews
+//     }
+// }
 
 // Thunks
 // export const loadAllReviews = (spotId) => async dispatch => {

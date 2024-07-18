@@ -14,9 +14,8 @@ const months = ["January","February","March","April","May","June","July",
 
 const SpotDetailsPage = () => {
     const dispatch = useDispatch()
-    const {spotId }= useParams()
+    const { spotId }= useParams()
     const spot = useSelector(state => state.spots.currentSpot)
-    console.log("Spot that is hopefully not broken",spot)
     const reviews = spot?.reviews? Object.values(spot.reviews) : []
     const user = useSelector(state => state.session.user)
 
@@ -34,9 +33,6 @@ const SpotDetailsPage = () => {
             images.push(image)
         }
     })
-
-
-    // console.log(hasReview)
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -66,7 +62,6 @@ const SpotDetailsPage = () => {
         return `${months[month - 1]} ${year}`
     }
 
-    // console.log((!reviews))
     return (
         <main id="spot-details-page">
 
@@ -110,7 +105,6 @@ const SpotDetailsPage = () => {
             <OpenModalMenuItem
                 className={`${showReviewButton()? '' : 'hide'} review-button`}
                 itemText="Post Your Review"
-                // onItemClick={closeMenu}
                 modalComponent={<ReviewFormModal spotId={spotId}/>}
               />
             {(!reviews.length) && showReviewButton()? <p>Be the first to post a Review!</p> : reviews.sort((a, b) => b.id - a.id).map(review => (
@@ -120,9 +114,7 @@ const SpotDetailsPage = () => {
                     <p>{review.review}</p>
                 </div>
             ))
-
         }
-
          </div>
         </main>
     )

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addSpotImage, createSpot, editSpot } from "../../store/spot";
 import { useNavigate, useParams } from "react-router-dom";
@@ -12,8 +12,9 @@ const SpotFormPage = ({formType}) => {
 
     const {spotId} = useParams()
     const spot = useSelector(state => {
-        if (spotId && state.spots.spots) return state.spots.spots[spotId]
+        if (spotId && state.spots.currentSpot) return state.spots.currentSpot
     })
+    // console.log('prevSpot', spot)
 
     const [spotDetails, setSpotDetails] = useState({
         country : '',
@@ -26,7 +27,7 @@ const SpotFormPage = ({formType}) => {
         name : '',
         price : '',
     })
-    // console.log(spotDetails)
+
     const images = {};
     if (spot?.SpotImages) {
         spot.SpotImages.forEach((image, index) => {
@@ -37,39 +38,41 @@ const SpotFormPage = ({formType}) => {
             }
         })
     }
+    console.log(images)
 
-    const [imageUrls, setImageUrls] = useState({
-        previewImageUrl : '',
-        image1: '',
-        image2: '',
-        image3: '',
-        image4: ''
-    })
+    const [imageUrls, setImageUrls] = useState({})
 
     useEffect(() => {
+        console.log('checks', spotId, !spot )
         if (spotId && !spot) {
             dispatch(loadSpot(spotId))
         } else if (spot) {
             setSpotDetails({
-                country :spot?.country,
-                address: spot?.state ,
-                city : spot?.city,
-                state : spot?.state,
-                lat : spot?.lat ,
-                lng : spot?.lng ,
-                description : spot?.description,
-                name : spot?.name,
-                price : spot?.price,
+                country :spot.country,
+                address: spot.state ,
+                city : spot.city,
+                state : spot.state,
+                lat : spot.lat ,
+                lng : spot.lng ,
+                description : spot.description,
+                name : spot.name,
+                price : spot.price,
             })
-            setImageUrls({
-                previewImageUrl : images.previewImageUrl,
-                image1: images.image1,
-                image2: images.image2,
-                image3: images.image3,
-                image4: images.image4
-            })
+
+            const updatedImages = {previewImageUrl : images.previewImageUrl}
+
+            if (images.image1) updatedImages.image1 = images.image1
+
+            if (images.image2) updatedImages.image2 = images.image2
+
+            if (images.image3) updatedImages.image3 = images.image3
+
+            if (images.image4) updatedImages.image4 = images.image4
+            console.log('before', updatedImages)
+            setImageUrls(updatedImages)
+            console.log('after', updatedImages)
         }
-    }, [dispatch, spotId, spot])
+    }, [dispatch, spotId, spot, images.previewImageUrl, images.image1, images.image2, images.image3, images.image4])
 
     const [errors, setErrors] = useState({})
 

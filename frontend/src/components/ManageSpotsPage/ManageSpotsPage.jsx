@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { loadCurrentSpots } from "../../store/spot";
 import { IoMdStar } from "react-icons/io";
 import './ManageSpots.css'
-
+import DeleteSpotModal from "../DeleteSpotModal/DeleteSpotModal";
+import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 
 const ManageSpotsPage = () => {
     const navigate = useNavigate()
@@ -45,7 +46,11 @@ const ManageSpotsPage = () => {
                 </div>
                 <div id="button-container">
                     <button onClick={() => navigate(`/spots/${spot.id}/edit`)}>Update</button>
-                    <button>Delete</button>
+                    <OpenModalMenuItem
+                        className='delete-button'
+                        itemText="Delete"
+                        modalComponent={<DeleteSpotModal spotId={spot.id}/>}
+              />
                 </div>
                 </div>
             ))}

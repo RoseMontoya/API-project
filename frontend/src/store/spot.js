@@ -5,7 +5,6 @@ const LOAD_DETAILS = 'store/spot/LOAD_DETAILS'
 const LOAD_REVIEWS = 'store/spot/LOAD_REVIEWS'
 const ADD_SPOT = 'store/spot/ADD_SPOT'
 const LOAD_CURRENT_SPOTS = 'store/spot/LOAD_CURRENT_SPOTS'
-const ADD_REVIEW = 'store/spot/ADD_REVIEW'
 
 
 // Action
@@ -41,13 +40,6 @@ const currentSpots = (spots) => {
     return {
         type: LOAD_CURRENT_SPOTS,
         spots
-    }
-}
-
-const addReview = (review) => {
-    return {
-        type: ADD_REVIEW,
-        review
     }
 }
 
@@ -122,6 +114,12 @@ export const createReview =( review, spotId ) => async dispatch => {
     return newReview
 }
 
+export const deleteSpot = (spotId) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {method: 'DELETE'})
+    dispatch(loadCurrentSpots())
+    return await response.json()
+}
+
 
 // Reducer
 
@@ -154,9 +152,6 @@ const spotReducer = (state = {}, action) => {
             });
             return {...state, currentSpots: {...currentSpots}}
 
-        }
-        case ADD_REVIEW: {
-            return {...state, currentSpot: {...state.currentSpot, reviews: {...state.currentSpot.reviews, [action.review.id]: action.review}}}
         }
         default:
             return state;
