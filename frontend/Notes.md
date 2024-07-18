@@ -17,6 +17,8 @@ Colors:
     - make sure that month is correct month
 - ### Edit Spot Form
     - refactor useState, so I can call it once in use Effect
+- ### Create Review
+    - get review count and average to update about new review is submitted
 
 ## WireFrame Images
 ![alt text](images/Wireframe-images/Landing_page.png)

@@ -1,22 +1,51 @@
 import { useModal } from '../../context/modal.jsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TiStarOutline } from "react-icons/ti";
 import { TiStarFullOutline } from "react-icons/ti";
 import './ReviewForm.css'
+import { useDispatch } from 'react-redux';
+import { createReview } from '../../store/spot.js';
 
 
-const ReviewFormModal= () => {
-
+const ReviewFormModal= ({spotId}) => {
+    const dispatch = useDispatch()
     const [review, setReview] = useState('');
     const [rating, setRating] = useState(0)
     const [errors, setErrors] = useState({})
-    const { closeModal } = useModal();
+    const [disabled, setDisabled] = useState(true)
+    const { closeModal, } = useModal();
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setErrors({})
+
+        const payload = {
+            review,
+            stars: rating
+        }
+
+        console.log(payload, spotId)
+
+        dispatch(createReview(payload, spotId))
+            .then(closeModal)
+            .catch(async res => {
+                const data = await res.json()
+                setErrors(data)
+            })
+    }
+
+    useEffect(() => {
+        if (rating !== 0 && review.length >= 10 ) {
+            setDisabled(false)
+        }
+    }, [rating, review])
+
+    // console.log(disabled)
     return (
         <div >
-            <form id='create-review-container'>
+            <form id='create-review-container' onSubmit={handleSubmit}>
             <h2>How was your Stay?</h2>
-            {errors?.review && <p className='error'>{errors.review}</p>}
+            {errors?.message && <p className='error' style={{margin: 0 }}>{errors.message}</p>}
             <textarea
                 rows='10'
                 placeholder='Leave your review here...'
@@ -58,7 +87,7 @@ const ReviewFormModal= () => {
                 <p style={{fontWeight: '700', padding: '.25em', paddingTop: 0}}>Stars</p>
             </div>
 
-            <button type='submit'>Submit Review</button>
+            <button type='submit' disabled={disabled} className={disabled? 'disabled' : ''}>Submit Review</button>
             </form>
         </div>
     )

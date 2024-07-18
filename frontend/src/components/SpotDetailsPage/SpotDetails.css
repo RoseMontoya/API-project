@@ -76,6 +76,19 @@
     padding-bottom: .5em;
 }
 
+.review-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: .5em;
+    padding: 0em .5em;
+    width: fit-content;
+    background-color: rgb(112, 110, 110);
+    color: white;
+    border: solid 2px black;
+    box-shadow: 2px 2px 0px black;
+}
+
 #spot-details {
     display: flex;
     justify-content: space-between;

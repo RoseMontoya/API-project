@@ -1,0 +1,71 @@
+#spot-form {
+    max-width: 24em;
+    margin: 0 auto;
+}
+#spot-form h2 {
+    text-align: start;
+}
+
+#spot-form h3 {
+    margin: 0;
+}
+
+.inline {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    margin: 0;
+    padding-bottom: .5em;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.inline * {
+    margin: 0;
+}
+
+.next-to-eachother {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comma {
+    align-self: end;
+    justify-self: start;
+    padding: 0 .4em .4em .1em;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.error {
+    margin: 0;
+}
+
+.demo {
+    color: #00525E;
+    justify-content: center;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#second-part-of-form p {
+    margin: 0;
+}
+
+#second-part-of-form input {
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+
+#second-part-of-form .error {
+    margin-top: .25em;
+    display: flex;
+    align-items: center;
+}
+
+#image-inputs{
+    display: flex;
+    flex-direction: column;
+    align-items: space-between;
+}

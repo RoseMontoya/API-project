@@ -17,7 +17,6 @@ const ProfileButton = ({user}) => {
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef()
 
-
     const toggleMenu = (e) => {
         e.stopPropagation();
         setShowMenu(!showMenu)

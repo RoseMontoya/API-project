@@ -1,8 +1,11 @@
 import { csrfFetch } from "./csrf";
 
 const LOAD_SPOTS = 'store/spot/LOAD_SPOTS'
+const LOAD_DETAILS = 'store/spot/LOAD_DETAILS'
+const LOAD_REVIEWS = 'store/spot/LOAD_REVIEWS'
 const ADD_SPOT = 'store/spot/ADD_SPOT'
 const LOAD_CURRENT_SPOTS = 'store/spot/LOAD_CURRENT_SPOTS'
+const ADD_REVIEW = 'store/spot/ADD_REVIEW'
 
 
 // Action
@@ -10,6 +13,20 @@ const loadSpots = (spots) => {
     return {
         type: LOAD_SPOTS,
         spots
+    }
+}
+
+const loadSpotDetails = (spot) => {
+    return {
+        type: LOAD_DETAILS,
+        spot
+    }
+}
+
+const loadReviews = (reviews) => {
+    return {
+        type: LOAD_REVIEWS,
+        reviews
     }
 }
 
@@ -27,6 +44,13 @@ const currentSpots = (spots) => {
     }
 }
 
+const addReview = (review) => {
+    return {
+        type: ADD_REVIEW,
+        review
+    }
+}
+
 
 // Thunk
 export const loadAllSpots = () => async dispatch => {
@@ -38,10 +62,18 @@ export const loadAllSpots = () => async dispatch => {
 }
 
 export const loadSpot = (spotId) => async dispatch => {
+    // Load Spot
     const response = await csrfFetch(`/api/spots/${spotId}`)
-
     const spot = await response.json();
-    dispatch(loadSpots([spot]))
+    await dispatch(loadSpotDetails(spot))
+
+    // Load Spot Reviews
+    const res = await csrfFetch(`/api/spots/${spotId}/reviews`)
+    const reviews = await res.json();
+    await dispatch(loadReviews(reviews.Reviews))
+
+    // Return spot
+    spot.reviews = reviews.Reviews
     return spot;
 }
 
@@ -80,6 +112,16 @@ export const editSpot = (spot, spotId) => async dispatch => {
     return updatedSpot;
 }
 
+export const createReview =( review, spotId ) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+        method: 'POST',
+        body: JSON.stringify(review)
+    })
+    const newReview = await response.json();
+    dispatch(loadSpot(spotId))
+    return newReview
+}
+
 
 // Reducer
 
@@ -90,10 +132,20 @@ const spotReducer = (state = {}, action) => {
             action.spots.forEach(spot => {
                 spots[spot.id] = spot
             })
-            return {...state, spots:{...spots}}
+            return {...state, spots: {...spots}}
+        }
+        case LOAD_DETAILS: {
+            return {...state, currentSpot : action.spot}
+        }
+        case LOAD_REVIEWS: {
+            const reviews = {}
+            action.reviews.forEach(review => {
+                reviews[review.id] = review
+            })
+            return {...state, currentSpot: {...state.currentSpot, reviews: reviews}}
         }
         case ADD_SPOT: {
-            return {...state, [action.spot.id]: action.spot}
+            return {...state, spots: {...state.spots, [action.spot.id]: action.spot}}
         }
         case LOAD_CURRENT_SPOTS: {
             const currentSpots = {};
@@ -102,6 +154,9 @@ const spotReducer = (state = {}, action) => {
             });
             return {...state, currentSpots: {...currentSpots}}
 
+        }
+        case ADD_REVIEW: {
+            return {...state, currentSpot: {...state.currentSpot, reviews: {...state.currentSpot.reviews, [action.review.id]: action.review}}}
         }
         default:
             return state;

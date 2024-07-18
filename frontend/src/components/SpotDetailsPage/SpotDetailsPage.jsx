@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { loadSpot } from "../../store/spot";
 import { IoMdStar } from "react-icons/io";
 import { LuDot } from "react-icons/lu";
-import { loadAllReviews } from "../../store/review";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import ReviewFormModal from "../ReviewFormModal";
 
@@ -16,22 +15,13 @@ const months = ["January","February","March","April","May","June","July",
 const SpotDetailsPage = () => {
     const dispatch = useDispatch()
     const {spotId }= useParams()
-    const spot = useSelector(state => {
-        if (state.spots.spots) {
-            return state.spots.spots[spotId]
-        }
-    })
-    const reviewsObj = useSelector(state => state.reviews);
-    const reviews = Object.values(reviewsObj)
+    const spot = useSelector(state => state.spots.currentSpot)
+    console.log("Spot that is hopefully not broken",spot)
+    const reviews = spot?.reviews? Object.values(spot.reviews) : []
     const user = useSelector(state => state.session.user)
-    const [showMenu, setShowMenu] = useState(false);
-    const closeMenu = () => setShowMenu(false);
-
-
 
     useEffect(() => {
         dispatch(loadSpot(spotId))
-        dispatch(loadAllReviews(spotId))
     }, [dispatch, spotId])
 
     if (!spot || !spot.SpotImages) return null;
@@ -46,6 +36,8 @@ const SpotDetailsPage = () => {
     })
 
 
+    // console.log(hasReview)
+
     const handleClick = (e) => {
         e.preventDefault();
 
@@ -58,12 +50,15 @@ const SpotDetailsPage = () => {
         return `${numReviews} reviews`
     }
 
+    const hasReview = reviews.find(review => review.userId === user?.id)
     const showReviewButton = () => {
-        if (user && user.id !== spot.ownerId) {
+        console.log(user && user.id !== spot.ownerId && !hasReview)
+        if (user && user?.id !== spot.ownerId && !hasReview) {
             return true;
         }
         return false
     }
+
     const formatReviewDate = (date) => {
         const dateSplit = date.split('-')
         const month = Number(dateSplit[1])
@@ -71,7 +66,7 @@ const SpotDetailsPage = () => {
         return `${months[month - 1]} ${year}`
     }
 
-    console.log((!reviews))
+    // console.log((!reviews))
     return (
         <main id="spot-details-page">
 
@@ -113,14 +108,14 @@ const SpotDetailsPage = () => {
                <li>{numReviewsText(spot.numReviews)}</li>
             </ul>
             <OpenModalMenuItem
+                className={`${showReviewButton()? '' : 'hide'} review-button`}
                 itemText="Post Your Review"
-                onItemClick={closeMenu}
-                modalComponent={<ReviewFormModal />}
+                // onItemClick={closeMenu}
+                modalComponent={<ReviewFormModal spotId={spotId}/>}
               />
-            {/* <button style={{marginTop: '1em'}}className={showReviewButton()? "" : 'hide'}>Post Your Review</button> */}
             {(!reviews.length) && showReviewButton()? <p>Be the first to post a Review!</p> : reviews.sort((a, b) => b.id - a.id).map(review => (
                 <div key={review.id} className="review">
-                    <h3>{review.User.firstName}</h3>
+                    <h3>{review.User?.firstName}</h3>
                     <h4>{formatReviewDate(review.updatedAt)}</h4>
                     <p>{review.review}</p>
                 </div>

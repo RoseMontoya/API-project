@@ -1,6 +1,6 @@
 import { useModal } from "../../context/modal";
 
-const OpenModalMenuItem = ({modalComponent, itemText, onItemClick, onModalClose}) => {
+const OpenModalMenuItem = ({modalComponent, itemText, onItemClick, onModalClose, className}) => {
     const { setModalContent, setOnModalClose } = useModal();
 
     const onClick = () => {
@@ -10,7 +10,7 @@ const OpenModalMenuItem = ({modalComponent, itemText, onItemClick, onModalClose}
     }
 
     return (
-        <li onClick={onClick}>{itemText}</li>
+        <li className={className} onClick={onClick}>{itemText}</li>
     )
 };
 
