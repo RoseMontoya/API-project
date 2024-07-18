@@ -8,6 +8,7 @@ import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
 import ReviewFormModal from "../ReviewFormModal";
 
 import './SpotDetails.css'
+import DeleteReviewModal from "../DeleteReviewModal/DeleteReviewModal";
 
 const months = ["January","February","March","April","May","June","July",
             "August","September","October","November","December"]
@@ -48,7 +49,7 @@ const SpotDetailsPage = () => {
 
     const hasReview = reviews.find(review => review.userId === user?.id)
     const showReviewButton = () => {
-        console.log(user && user.id !== spot.ownerId && !hasReview)
+        // console.log(user && user.id !== spot.ownerId && !hasReview)
         if (user && user?.id !== spot.ownerId && !hasReview) {
             return true;
         }
@@ -114,11 +115,13 @@ const SpotDetailsPage = () => {
                     <h3>{review.User?.firstName}</h3>
                     <h4>{formatReviewDate(review.updatedAt)}</h4>
                     <p>{review.review}</p>
-                   { console.log(user.id, review.userId)}
+                   {/* { console.log(user.id, review.userId)} */}
                     <OpenModalMenuItem
                         className={`${user.id === review.userId? '' : 'hide'} review-button`}
                         itemText="Delete"
-                        modalComponent={<ReviewFormModal reviewId={review.id}/>}
+                        modalComponent={<DeleteReviewModal reviewId={review.id}
+                        spotId={spotId}
+                        />}
               />
                 </div>
             ))
