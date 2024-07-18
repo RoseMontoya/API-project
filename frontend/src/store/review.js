@@ -1,6 +1,6 @@
 // import { csrfFetch } from "./csrf";
 
-const LOAD_REVIEWS = '/store/review/LOAD_REVIEWS'
+// const LOAD_REVIEWS = '/store/review/LOAD_REVIEWS'
 
 // Action
 // const loadReviews = (reviews) => {
@@ -14,7 +14,7 @@ const LOAD_REVIEWS = '/store/review/LOAD_REVIEWS'
 // export const loadAllReviews = (spotId) => async dispatch => {
 //     const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
 //     const data = await response.json();
-//     console.log(data)
+
 //     dispatch(loadReviews(data.Reviews))
 //     return data;
 // }
@@ -32,18 +32,18 @@ const LOAD_REVIEWS = '/store/review/LOAD_REVIEWS'
 // }
 
 // Reducer
-const reviewReducer = (state = {}, action) => {
-    switch (action.type) {
-        case LOAD_REVIEWS: {
-            const reviews = {}
-            action.reviews.forEach(review => {
-                reviews[review.id] = review
-            })
-            return {...reviews}
-        }
-        default:
-            return state;
-    }
-}
+// const reviewReducer = (state = {}, action) => {
+//     switch (action.type) {
+//         case LOAD_REVIEWS: {
+//             const reviews = {}
+//             action.reviews.forEach(review => {
+//                 reviews[review.id] = review
+//             })
+//             return {...reviews}
+//         }
+//         default:
+//             return state;
+//     }
+// }
 
-export default reviewReducer;
+// export default reviewReducer;

@@ -20,6 +20,7 @@ const SpotDetailsPage = () => {
     const reviews = spot?.reviews? Object.values(spot.reviews) : []
     const user = useSelector(state => state.session.user)
 
+
     useEffect(() => {
         dispatch(loadSpot(spotId))
     }, [dispatch, spotId])
@@ -49,7 +50,7 @@ const SpotDetailsPage = () => {
 
     const hasReview = reviews.find(review => review.userId === user?.id)
     const showReviewButton = () => {
-        // console.log(user && user.id !== spot.ownerId && !hasReview)
+
         if (user && user?.id !== spot.ownerId && !hasReview) {
             return true;
         }
@@ -115,9 +116,8 @@ const SpotDetailsPage = () => {
                     <h3>{review.User?.firstName}</h3>
                     <h4>{formatReviewDate(review.updatedAt)}</h4>
                     <p>{review.review}</p>
-                   {/* { console.log(user.id, review.userId)} */}
                     <OpenModalMenuItem
-                        className={`${user.id === review.userId? '' : 'hide'} review-button`}
+                        className={`${user?.id === review.userId? '' : 'hide'} review-button`}
                         itemText="Delete"
                         modalComponent={<DeleteReviewModal reviewId={review.id}
                         spotId={spotId}

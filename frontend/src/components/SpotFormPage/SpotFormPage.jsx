@@ -14,7 +14,6 @@ const SpotFormPage = ({formType}) => {
     const spot = useSelector(state => {
         if (spotId && state.spots.currentSpot) return state.spots.currentSpot
     })
-    // console.log('prevSpot', spot)
 
     const [spotDetails, setSpotDetails] = useState({
         country : '',
@@ -38,12 +37,10 @@ const SpotFormPage = ({formType}) => {
             }
         })
     }
-    console.log(images)
 
     const [imageUrls, setImageUrls] = useState({})
 
     useEffect(() => {
-        console.log('checks', spotId, !spot )
         if (spotId && !spot) {
             dispatch(loadSpot(spotId))
         } else if (spot) {
@@ -68,9 +65,8 @@ const SpotFormPage = ({formType}) => {
             if (images.image3) updatedImages.image3 = images.image3
 
             if (images.image4) updatedImages.image4 = images.image4
-            console.log('before', updatedImages)
             setImageUrls(updatedImages)
-            console.log('after', updatedImages)
+
         }
     }, [dispatch, spotId, spot, images.previewImageUrl, images.image1, images.image2, images.image3, images.image4])
 

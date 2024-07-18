@@ -12,10 +12,8 @@ const EditSpotPage = () => {
 
     const {spotId} = useParams()
     const spot = useSelector(state => state.spots.currentSpot)
-    console.log('spot', spot)
 
     useEffect(() => {
-        console.log('checks', spotId, !spot )
         if (spotId && !spot) {
             dispatch(loadSpot(spotId))
         }
@@ -69,6 +67,7 @@ const EditSpotPage = () => {
         })
     }
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -89,7 +88,7 @@ const EditSpotPage = () => {
         const errs = {}
         if (!images.previewImageUrl) errs.previewImageUrl = 'Preview image is required.'
 
-        const newImages = [{ url: images.previewImageUrl, preview: true }]
+        const newImages = []
 
         const urlCheck = (url) => {
             const urlSplit = url.split('.')
@@ -99,6 +98,9 @@ const EditSpotPage = () => {
             }
             return true;
         }
+
+        if (urlCheck(images.previewImageUrl)) newImages.push({ url: images.previewImageUrl, preview: true })
+        else errs.previewImageUrl = 'Image URL must end in .png, .jpg, or .jpeg'
 
         if (images.image1) {
             if (urlCheck(images.image1)) newImages.push({ url: images.image1 });
@@ -316,7 +318,7 @@ const EditSpotPage = () => {
                         {errors?.image4 && <p className="error">{errors.image4}</p>}
                         <hr></hr>
                     </div>
-                    <button type="sumbit">Update Your Spot</button>
+                    <button className="form-button" type="sumbit">Update Your Spot</button>
                 </div>
 
             </form>

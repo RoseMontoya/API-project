@@ -49,6 +49,9 @@
     cursor: pointer;
 }
 
+.form-button {
+    margin: 0 auto;
+}
 #second-part-of-form p {
     margin: 0;
 }

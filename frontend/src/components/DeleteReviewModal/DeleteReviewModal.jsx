@@ -6,8 +6,6 @@ const DeleteReviewModal = ({reviewId, spotId}) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    console.log(reviewId)
-
     const handleDelete = (e) => {
         e.preventDefault()
 

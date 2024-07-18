@@ -111,7 +111,7 @@ const CreateSpotPage = () => {
             "description": "Exquisite palace apartment with views of the Fountain Courtyard in Val Royeaux",
             "price": 500
         })
-        setImageUrls({previewImageUrl : 'https://i.quotev.com/o7dxwda3ssma.jpg'})
+        setImageUrls({...imageUrls, previewImageUrl : 'https://i.quotev.com/o7dxwda3ssma.jpg'})
     }
 
     return (
@@ -298,7 +298,7 @@ const CreateSpotPage = () => {
                         {errors?.image4 && <p className="error">{errors.image4}</p>}
                         <hr></hr>
                     </div>
-                    <button type="sumbit">Create Spot</button>
+                    <button className='form-button' type="sumbit">Create Spot</button>
                 </div>
 
             </form>
