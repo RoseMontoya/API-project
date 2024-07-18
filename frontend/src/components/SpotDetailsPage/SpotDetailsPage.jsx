@@ -55,6 +55,8 @@ const SpotDetailsPage = () => {
         return false
     }
 
+
+
     const formatReviewDate = (date) => {
         const dateSplit = date.split('-')
         const month = Number(dateSplit[1])
@@ -112,6 +114,12 @@ const SpotDetailsPage = () => {
                     <h3>{review.User?.firstName}</h3>
                     <h4>{formatReviewDate(review.updatedAt)}</h4>
                     <p>{review.review}</p>
+                   { console.log(user.id, review.userId)}
+                    <OpenModalMenuItem
+                        className={`${user.id === review.userId? '' : 'hide'} review-button`}
+                        itemText="Delete"
+                        modalComponent={<ReviewFormModal reviewId={review.id}/>}
+              />
                 </div>
             ))
         }
