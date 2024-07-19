@@ -44,8 +44,11 @@ const LoginFormModal = () => {
     useEffect(() => {
         if (credential.length >= 4 && password.length >= 6) {
             setDisabled(false)
+        } else {
+            setDisabled(true)
         }
-        setErrors({})
+        // setErrors({})
+
     }, [credential, password])
 
     return (
@@ -67,7 +70,7 @@ const LoginFormModal = () => {
             <label>
                 Password
                 <input
-                    type="text"
+                    type="password"
                     // placeholder="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}

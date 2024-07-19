@@ -205,7 +205,7 @@ const EditSpotPage = () => {
                             {errors?.lat && <p className="error">{errors?.lat}</p>}
                         </div>
                         <input
-                            type="text"
+                            type="number"
                             style={{maxWidth: '16em'}}
                             placeholder="Latitude"
                             value={spotDetails.lat}
@@ -220,7 +220,7 @@ const EditSpotPage = () => {
                             {errors?.lng && <p className="error">{errors?.lng}</p>}
                         </div>
                         <input
-                            type="text"
+                            type="number"
                             placeholder="Longitude"
                             value={spotDetails.lng}
                             onChange={(e) => setSpotDetails({...spotDetails, lng: e.target.value })}
@@ -264,7 +264,7 @@ const EditSpotPage = () => {
                             }}
                         >$</span>
                         <input
-                            type="text"
+                            type="number"
                             placeholder="Price per night (USD)"
                             value={spotDetails.price}
                             onChange={(e) => setSpotDetails({...spotDetails, price: e.target.value })}

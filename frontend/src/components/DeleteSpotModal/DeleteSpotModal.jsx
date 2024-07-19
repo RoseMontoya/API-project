@@ -9,7 +9,9 @@ const DeleteSpotModal = ({spotId}) => {
     const { closeModal } = useModal();
 
 
-    const handleDelete = () => {
+    const handleDelete = (e) => {
+        e.preventDefault();
+
         dispatch(deleteSpot(spotId))
             .then(closeModal)
     }

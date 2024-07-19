@@ -5,6 +5,7 @@ const LOAD_DETAILS = 'store/spot/LOAD_DETAILS'
 const LOAD_REVIEWS = 'store/spot/LOAD_REVIEWS'
 const ADD_SPOT = 'store/spot/ADD_SPOT'
 const LOAD_CURRENT_SPOTS = 'store/spot/LOAD_CURRENT_SPOTS'
+const REMOVE_SPOT = 'store/spot/REMOVE_SPOT'
 
 
 // Action
@@ -40,6 +41,13 @@ const currentSpots = (spots) => {
     return {
         type: LOAD_CURRENT_SPOTS,
         spots
+    }
+}
+
+const removeSpot = (spotId) => {
+    return {
+        type: REMOVE_SPOT,
+        spotId
     }
 }
 
@@ -116,8 +124,8 @@ export const createReview =( review, spotId ) => async dispatch => {
 
 export const deleteSpot = (spotId) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {method: 'DELETE'})
-    dispatch(loadCurrentSpots())
-    return await response.json()
+    dispatch(removeSpot(spotId))
+    return response
 }
 
 export const deleteReview = (reviewId, spotId) => async dispatch => {
@@ -125,7 +133,6 @@ export const deleteReview = (reviewId, spotId) => async dispatch => {
     dispatch(loadSpot(spotId))
     return response
 }
-
 
 // Reducer
 
@@ -157,7 +164,11 @@ const spotReducer = (state = {}, action) => {
                 currentSpots[spot.id] = spot
             });
             return {...state, currentSpots: {...currentSpots}}
-
+        }
+        case REMOVE_SPOT: {
+            const newState = {...state, currentSpots: {...state.currentSpots}}
+            delete newState.currentSpots[action.spotId]
+            return newState
         }
         default:
             return state;

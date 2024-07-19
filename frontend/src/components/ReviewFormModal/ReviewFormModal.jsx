@@ -37,6 +37,8 @@ const ReviewFormModal= ({spotId}) => {
     useEffect(() => {
         if (rating !== 0 && review.length >= 10 ) {
             setDisabled(false)
+        } else {
+            setDisabled(true)
         }
     }, [rating, review])
 
