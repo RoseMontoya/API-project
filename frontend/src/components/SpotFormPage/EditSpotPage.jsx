@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addSpotImage, editSpot } from "../../store/spot";
+import { addSpotImage, updateImage, editSpot, deleteImage } from "../../store/spot";
 import { useNavigate, useParams } from "react-router-dom";
 import { loadSpot} from "../../store/spot";
 import './SpotForm.css'
@@ -46,9 +46,9 @@ const EditSpotPage = () => {
     if (!images.previewImageUrl) {
         spot.SpotImages.forEach((image, index) => {
             if (image.preview === true) {
-                images.previewImageUrl = image.url
+                images.previewImageUrl = image
             } else {
-                images[`image${index}`] = image.url
+                images[`image${index}`] = image
             }
         })
     }
@@ -73,7 +73,7 @@ const EditSpotPage = () => {
 
         setErrors({})
 
-        const newSpot = {
+        const payload = {
             address: spotDetails.address,
             city: spotDetails.city,
             state: spotDetails.state,
@@ -86,9 +86,10 @@ const EditSpotPage = () => {
         }
 
         const errs = {}
-        if (!images.previewImageUrl) errs.previewImageUrl = 'Preview image is required.'
 
-        const newImages = []
+        const newImages = [];
+        const updatedImages = [];
+        const deleteImages = [];
 
         const urlCheck = (url) => {
             const urlSplit = url.split('.')
@@ -99,30 +100,42 @@ const EditSpotPage = () => {
             return true;
         }
 
-        if (urlCheck(images.previewImageUrl)) newImages.push({ url: images.previewImageUrl, preview: true })
-        else errs.previewImageUrl = 'Image URL must end in .png, .jpg, or .jpeg'
+        const imageArr = Object.values(images)
+        imageArr.forEach((image, index) => {
+            if (image.preview === true) {
+                if (!images.previewImageUrl) {
+                    errs.previewImageUrl = 'Preview image is required.'
+                } else {
+                    if (urlCheck(images.previewImageUrl.url)) {
+                        if (spot.SpotImages[0]) updatedImages.push(image)
+                        else newImages.push(image)
+                    }
+                }
+            } else {
+                if (image) {
+                    if (urlCheck(image.url)) {
+                        if (spot.SpotImages[index]) updatedImages.push(image)
+                        else newImages.push(image)
+                    }
+                    else {
+                        errs[`image${index}`] = 'Image URL must end in .png, .jpg, or .jpeg'}
+                } else if (spot.SpotImages[index]) deleteImages.push(spot.SpotImages[index].id)
+            }
+        })
 
-        if (images.image1) {
-            if (urlCheck(images.image1)) newImages.push({ url: images.image1 });
-            else errs.image1 = 'Image URL must end in .png, .jpg, or .jpeg'
-        }
-        if (images.image2) {
-            if (urlCheck(images.image2)) newImages.push({ url: images.image2 });
-            else errs.image2 = 'Image URL must end in .png, .jpg, or .jpeg'
-        }
-        if (images.image3) {
-            if (urlCheck(images.image3)) newImages.push({ url: images.image3 });
-            else errs.image3 = 'Image URL must end in .png, .jpg, or .jpeg'
-        }
-        if (images.image4) {
-            if (urlCheck(images.image4)) newImages.push({ url: images.image4 });
-            else errs.image4 = 'Image URL must end in .png, .jpg, or .jpeg'
-        }
-
-        dispatch(editSpot(newSpot, spotId))
+        dispatch(editSpot(payload, spotId))
         .then(res => {
             newImages.map(async image => {
+                // console.log('new',image)
                 dispatch(addSpotImage(image, res.id))
+            })
+            updatedImages.map(async image => {
+                // console.log('update', image)
+                dispatch(updateImage(image))
+            })
+            deleteImages.map(async image => {
+                // console.log('delete', image )
+                dispatch(deleteImage(image))
             })
             return res;
         })
@@ -277,42 +290,42 @@ const EditSpotPage = () => {
                     <p>Submit a link to at least one photo to publish your spot.</p>
                     <div id="image-inputs">
                         <input
-                            type="text"
+                            type="url"
                             placeholder="Preview Image URL"
-                            value={images.previewImageUrl}
-                            onChange={(e) => setImages({...images, previewImageUrl: e.target.value})}
+                            value={images.previewImageUrl.url}
+                            onChange={(e) => setImages({...images, previewImageUrl: {...images.previewImageUrl, url: e.target.value}})}
                             name='previewImageUrl'
                         />
                         {errors?.previewImageUrl && <p className="error">{errors?.previewImageUrl}</p>}
                         <input
-                            type="text"
+                            type="url"
                             placeholder="Image URL"
-                            value={images.image1}
-                            onChange={(e) => setImages({...images, image1: e.target.value})}
+                            value={images.image1.url}
+                            onChange={(e) => setImages({...images, image1: {...images.image1, url: e.target.value}})}
                             name='image1'
                         />
                         {errors?.image1 && <p className="error">{errors.image1}</p>}
                         <input
-                            type="text"
+                            type="url"
                             placeholder="Image URL"
-                            value={images.image2}
-                            onChange={(e) => setImages({...images, image2: e.target.value})}
+                            value={images.image2.url}
+                            onChange={(e) => setImages({...images, image2: {...images.image2, url: e.target.value}})}
                             name='image2'
                         />
                         {errors?.image2 && <p className="error">{errors.image2}</p>}
                         <input
-                            type="text"
+                            type="url"
                             placeholder="Image URL"
-                            value={images.image3}
-                            onChange={(e) => setImages({...images, image3: e.target.value})}
+                            value={images.image3.url}
+                            onChange={(e) => setImages({...images, image3: {...images.image3, url: e.target.value}})}
                             name='image3'
                         />
                         {errors?.image3 && <p className="error">{errors.image3}</p>}
                         <input
-                            type="text"
+                            type="url"
                             placeholder="Image URL"
-                            value={images.image4}
-                            onChange={(e) => setImages({...images, image4: e.target.value})}
+                            value={images.image4.url}
+                            onChange={(e) => setImages({...images, image4: {...images.image4, url: e.target.value}})}
                             name='image4'
                         />
                         {errors?.image4 && <p className="error">{errors.image4}</p>}

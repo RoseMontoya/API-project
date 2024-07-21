@@ -24,8 +24,6 @@ const ReviewFormModal= ({spotId}) => {
             stars: rating
         }
 
-        console.log(payload, spotId)
-
         dispatch(createReview(payload, spotId))
             .then(closeModal)
             .catch(async res => {
@@ -40,7 +38,6 @@ const ReviewFormModal= ({spotId}) => {
         }
     }, [rating, review])
 
-    // console.log(disabled)
     return (
         <div >
             <form id='create-review-container' onSubmit={handleSubmit}>
