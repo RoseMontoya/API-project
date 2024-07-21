@@ -48,7 +48,6 @@ const CreateSpotPage = () => {
         }
 
         const errs = {}
-        if (!imageUrls.previewImageUrl) errs.previewImageUrl = 'Preview image is required.'
 
         const images = []
 
@@ -61,8 +60,11 @@ const CreateSpotPage = () => {
             return true;
         }
 
-        if (urlCheck(imageUrls.previewImageUrl)) images.push({ url: imageUrls.previewImageUrl, preview: true })
-        else errs.previewImageUrl = 'Image URL must end in .png, .jpg, or .jpeg'
+        if (!imageUrls.previewImageUrl) errs.previewImageUrl = 'Preview image is required.'
+        else {
+            if (urlCheck(imageUrls.previewImageUrl)) images.push({ url: imageUrls.previewImageUrl, preview: true })
+            else errs.previewImageUrl = 'Image URL must end in .png, .jpg, or .jpeg'
+        }
 
         if (imageUrls.image1) {
             if (urlCheck(imageUrls.image1)) images.push({ url: imageUrls.image1 });
@@ -94,7 +96,9 @@ const CreateSpotPage = () => {
                 .catch(async err => {
                     const data = await err.json();
                     const newErrors = {...errs, ...data.errors}
-                    setErrors(newErrors)
+                    if (newErrors.country === 'country must be unique')
+                        setErrors({unique: 'Address already exists'})
+                    else setErrors(newErrors)
                 })
         }
 
@@ -122,6 +126,7 @@ const CreateSpotPage = () => {
 
                 <h3>Where&apos;s your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation.</p>
+                {errors?.unique && <p className="error" style={{margin: 0}}>{errors?.unique}</p>}
                 <label>
                     <div className="inline">Country
                     {errors?.country && <p className="error" style={{margin: 0}}>{errors?.country}</p>}
@@ -298,7 +303,7 @@ const CreateSpotPage = () => {
                         {errors?.image4 && <p className="error">{errors.image4}</p>}
                         <hr></hr>
                     </div>
-                    <button className='form-button' type="sumbit">Create Spot</button>
+                    <button className='form-button' type="sumbit" >Create Spot</button>
                 </div>
 
             </form>

@@ -102,7 +102,7 @@ const demoSpots = [
     "lat": 39.9042,
     "lng": 116.4074,
     "name": "Imperial Palace Retreat",
-    "description": "Experience the epitome of luxury at this exquisite AirBnB suite in Minrathous, owned by the esteemed Dorian Pavus. Nestled within the grandeur of the Imperial Palace, this elegant retreat offers guests a taste of Tevinter opulence. The suite features a spacious and beautifully decorated bedroom with a king-sized bed, an opulent lounge area adorned with intricate tapestries, and a private balcony that provides breathtaking views of Minrathous. Guests can indulge in the luxurious amenities, including a lavish marble bathroom with a soaking tub, a fully stocked private bar, and personalized concierge service. Ideal for those seeking a blend of historical charm and modern comforts, this suite promises an unforgettable stay in the heart of Tevinter's capital.",
+    "description": "Experience the epitome of luxury at this exquisite suite in Minrathous. Nestled within the grandeur of the Imperial Palace, this elegant retreat offers guests a taste of Tevinter opulence. The suite features a spacious and beautifully decorated bedroom with a king-sized bed, an opulent lounge area adorned with intricate tapestries, and a private balcony that provides breathtaking views of Minrathous. Guests can indulge in the luxurious amenities, including a lavish marble bathroom with a soaking tub, a fully stocked private bar, and personalized concierge service. Ideal for those seeking a blend of historical charm and modern comforts, this suite promises an unforgettable stay in the heart of Tevinter's capital.",
     "price": 600
   }
 ]

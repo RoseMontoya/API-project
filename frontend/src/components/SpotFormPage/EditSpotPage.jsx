@@ -12,13 +12,7 @@ const EditSpotPage = () => {
 
     const {spotId} = useParams()
     const spot = useSelector(state => state.spots.currentSpot)
-
-    useEffect(() => {
-        if (spotId && !spot) {
-            dispatch(loadSpot(spotId))
-        }
-    }, [dispatch, spotId, spot])
-
+    console.log(spot)
 
     const [spotDetails, setSpotDetails] = useState({
         country : '',
@@ -31,6 +25,28 @@ const EditSpotPage = () => {
         name : '',
         price : '',
     })
+    useEffect(() => {
+        // console.log(spotId, typeof spotId, spot.id, typeof spot.id)
+        if (spotId && !spot || +spotId !== spot.id ) {
+            dispatch(loadSpot(spotId))
+            // dispatch(loadCurrentSpots())
+        }
+        if (spot) {
+            setSpotDetails({
+                country :spot.country || '',
+                address: spot.state || '',
+                city : spot.city || '',
+                state : spot.state || '',
+                lat : spot.lat || '',
+                lng : spot.lng || '',
+                description : spot.description || '',
+                name : spot.name || '',
+                price : spot.price || '',
+            })
+        }
+    }, [dispatch, spotId, spot])
+
+
 
     const [images, setImages] = useState({
         previewImageUrl: '',
@@ -41,7 +57,7 @@ const EditSpotPage = () => {
     })
 
     const [errors, setErrors] = useState({})
-    if (!spot) return null;
+    if (!spot || spot.id !== +spotId) return null;
 
     if (!images.previewImageUrl) {
         spot.SpotImages.forEach((image, index) => {
@@ -53,19 +69,19 @@ const EditSpotPage = () => {
         })
     }
 
-    if (!spotDetails.country) {
-        setSpotDetails({
-            country :spot.country || '',
-            address: spot.state || '',
-            city : spot.city || '',
-            state : spot.state || '',
-            lat : spot.lat || '',
-            lng : spot.lng || '',
-            description : spot.description || '',
-            name : spot.name || '',
-            price : spot.price || '',
-        })
-    }
+    // if (!spotDetails.country) {
+    //     setSpotDetails({
+    //         country :spot.country || '',
+    //         address: spot.state || '',
+    //         city : spot.city || '',
+    //         state : spot.state || '',
+    //         lat : spot.lat || '',
+    //         lng : spot.lng || '',
+    //         description : spot.description || '',
+    //         name : spot.name || '',
+    //         price : spot.price || '',
+    //     })
+    // }
 
 
     const handleSubmit = async (e) => {
@@ -103,8 +119,9 @@ const EditSpotPage = () => {
         const imageArr = Object.values(images)
         imageArr.forEach((image, index) => {
             if (image.preview === true) {
-                if (!images.previewImageUrl) {
-                    errs.previewImageUrl = 'Preview image is required.'
+                if (!images.previewImageUrl.url) {
+                    console.log('HERERERERERERE',image)
+                    errs.previewImageUrl = 'Preview image is required. Please include a new preview image or restore the previous.'
                 } else {
                     if (urlCheck(images.previewImageUrl.url)) {
                         if (spot.SpotImages[0]) updatedImages.push(image)
@@ -112,7 +129,7 @@ const EditSpotPage = () => {
                     }
                 }
             } else {
-                if (image) {
+                if (image.url) {
                     if (urlCheck(image.url)) {
                         if (spot.SpotImages[index]) updatedImages.push(image)
                         else newImages.push(image)
@@ -125,6 +142,7 @@ const EditSpotPage = () => {
 
         dispatch(editSpot(payload, spotId))
         .then(res => {
+            if (Object.values(errs).length) throw errs
             newImages.map(async image => {
                 // console.log('new',image)
                 dispatch(addSpotImage(image, res.id))
@@ -143,9 +161,12 @@ const EditSpotPage = () => {
             navigate(`/spots/${res.id}`);
         })
         .catch(async err => {
-            const data = await err.json();
+            console.log('in catch', err)
+            const data = err.status? await err.json() : {};
             const newErrors = {...errs, ...data.errors}
-            setErrors(newErrors)
+            if (newErrors.country === 'country must be unique')
+                setErrors({unique: 'Address already exists'})
+            else setErrors(newErrors)
         })
     }
 
@@ -155,6 +176,7 @@ const EditSpotPage = () => {
             <form onSubmit={handleSubmit}>
                 <h3>Where&apos;s your place located?</h3>
                 <p>Guests will only get your exact address once they booked a reservation.</p>
+                {errors?.unique && <p className="error" style={{margin: 0}}>{errors?.unique}</p>}
                 <label>
                     <div className="inline">Country
                     {errors?.country && <p className="error" style={{margin: 0}}>{errors?.country}</p>}
