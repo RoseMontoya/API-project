@@ -112,6 +112,25 @@ export const editSpot = (spot, spotId) => async dispatch => {
     return updatedSpot;
 }
 
+export const updateImage = (image) => async () => {
+    const response = await csrfFetch(`/api/spot-images/${image.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(image)
+    })
+
+    const newImage = await response.json();
+    return newImage;
+}
+
+export const deleteImage = (imageId) => async () => {
+    const response = await csrfFetch(`/api/spot-images/${imageId}`, {
+        method: 'DELETE',
+    })
+
+    const data = await response.json();
+    return data;
+}
+
 export const createReview =( review, spotId ) => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'POST',
